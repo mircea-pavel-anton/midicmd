@@ -35,7 +35,7 @@ void CmdHelper::deviceSet(uint16_t port_id) {
 		std::cout << Colors::Modifiers::Reset << std::endl;
 	} catch(std::range_error &err) {
 		std::cout << Colors::Foreground::Red;
-		std::cout << "Failed to set device!";
+		std::cout << "Failed to set device. Index out of range!";
 		std::cout << Colors::Modifiers::Reset << std::endl;
 	}
 }
