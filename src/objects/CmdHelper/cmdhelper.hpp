@@ -8,7 +8,8 @@ class CmdHelper {
 	public:
 		CmdHelper();
 		~CmdHelper();
-		
+
+		uint16_t deviceList();
 	private:
 		MidiHelper *midiHelper;
 }; //CmdHelper
