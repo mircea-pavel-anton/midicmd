@@ -10,6 +10,8 @@ class CmdHelper {
 		~CmdHelper();
 
 		uint16_t deviceList();
+		void deviceSet();
+		void deviceSet(uint16_t);
 	private:
 		MidiHelper *midiHelper;
 }; //CmdHelper
