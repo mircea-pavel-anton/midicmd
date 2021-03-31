@@ -39,3 +39,15 @@ void CmdHelper::deviceSet(uint16_t port_id) {
 		std::cout << Colors::Modifiers::Reset << std::endl;
 	}
 }
+
+void CmdHelper::deviceHelp() {
+	std::cout << Colors::Foreground::Yellow;
+	std::cout << "Usage: ";
+	std::cout << Colors::Modifiers::Reset;
+	std::cout << "midicmd device [OPTION]" << std::endl << std::endl;
+
+	std::cout << "Available options: " << std::endl;
+	std::cout << "\tls" << "\tPrint a list of all available devices" << std::endl;
+	std::cout << "\tset" << "\tChoose one of the available input devices for this program to listen to." << std::endl;
+	std::cout << "\trm" << "\tRemove the current selection of active device, if any" << std::endl;
+}
