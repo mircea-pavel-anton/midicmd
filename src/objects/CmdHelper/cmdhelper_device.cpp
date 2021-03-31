@@ -40,6 +40,13 @@ void CmdHelper::deviceSet(uint16_t port_id) {
 	}
 }
 
+void CmdHelper::deviceRemove() {
+	midiHelper->clearDevice();
+	std::cout << Colors::Foreground::Green;
+	std::cout << "Device cleared!";
+	std::cout << Colors::Modifiers::Reset << std::endl;
+}
+
 void CmdHelper::deviceHelp() {
 	std::cout << Colors::Foreground::Yellow;
 	std::cout << "Usage: ";
