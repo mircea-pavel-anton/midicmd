@@ -17,6 +17,7 @@ class MidiHelper {
 		void setInputDevice(uint16_t);
 		void setOutputDevice(uint16_t);
 
+		void clearDevice();
 	private:
 		RtMidiIn *midiIn;
 		RtMidiOut *midiOut;

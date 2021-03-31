@@ -48,3 +48,8 @@ void MidiHelper::setDevice(RtMidi *midi, uint16_t port_id) {
 
 void MidiHelper::setInputDevice(uint16_t port_id) { return setDevice(midiIn, port_id); }
 void MidiHelper::setOutputDevice(uint16_t port_id) { return setDevice(midiOut, port_id); }
+
+void MidiHelper::clearDevice() {
+	midiIn->closePort();
+	midiOut->closePort();
+}
