@@ -66,7 +66,7 @@ void ArgParser::parse_device(int argc, char **argv) {
 	}
 
 	if ( strcmp(argv[2], "rm") == 0 ) {
-		std::cout << "Device unset" << std::endl; //TODO
+		cmdHelper->deviceRemove();
 		return;
 	}
 
