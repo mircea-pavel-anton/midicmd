@@ -1,8 +1,11 @@
 #include <iostream>
-#include "objects/utils/utils.hpp"
+#include "objects/Utils/utils.hpp"
+#include "objects/ArgParser/argparser.hpp"
 
 int main(int argc, char **argv) {
-    std::cout << "Hello from midicmd!" << std::endl;
+    ArgParser parser = ArgParser();
+
+    parser.parse(argc, argv);
 
     return 0;
 } //main()
