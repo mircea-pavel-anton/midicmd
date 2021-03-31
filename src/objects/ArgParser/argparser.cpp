@@ -1,12 +1,15 @@
 #include "argparser.hpp"
 
+inline void alert_insufficient_params() {
+	std::cout << Colors::Foreground::Red;
+	std::cout << "Insufficient parameters!";
+	std::cout << Colors::Modifiers::Reset << std::endl;
+}
+
 ArgParser::ArgParser() {}
 
 void ArgParser::parse(int argc, char **argv) {
-	if (argc < 2) {
-		std::cout << "Insufficient parameters!" << std::endl;
-		return;
-	}
+	if (argc < 2) return alert_insufficient_params();	
 
 	if (strcmp(argv[1], "device") == 0) return parse_device(argc, argv);
 	if (strcmp(argv[1], "config") == 0) return parse_config(argc, argv);
@@ -33,10 +36,7 @@ void ArgParser::parse(int argc, char **argv) {
 }
 
 void ArgParser::parse_device(int argc, char **argv) {
-	if (argc < 3) {
-		std::cout << "Insufficient parameters!" << std::endl;
-		return;
-	}
+	if (argc < 3) return alert_insufficient_params();	
 
 	if ( strcmp(argv[2], "ls") == 0 ) {
 		std::cout << "List of devices:" << std::endl;
@@ -60,10 +60,7 @@ void ArgParser::parse_device(int argc, char **argv) {
 }
 
 void ArgParser::parse_config(int argc, char **argv) {
-	if (argc < 3) {
-		std::cout << "Insufficient parameters!" << std::endl;
-		return;
-	}
+	if (argc < 3) return alert_insufficient_params();	
 
 	if ( strcmp(argv[2], "ls") == 0 ) {
 		std::cout << "Show config contents" << std::endl;
