@@ -1,11 +1,5 @@
 #include "argparser.hpp"
 
-inline void alert_insufficient_params() {
-	std::cout << Colors::Foreground::Red;
-	std::cout << "Insufficient parameters!";
-	std::cout << Colors::Modifiers::Reset << std::endl;
-}
-
 ArgParser::ArgParser() {
 	cmdHelper = new CmdHelper();
 }
@@ -14,34 +8,37 @@ ArgParser::~ArgParser() {
 }
 
 void ArgParser::parse(int argc, char **argv) {
-	if (argc < 2) return alert_insufficient_params();	
+	if (argc < 2) {
+		cout << toRed("Insufficient parmeters!");
+		return;
+	}
 
 	if (strcmp(argv[1], "device") == 0) return parse_device(argc, argv);
 	if (strcmp(argv[1], "config") == 0) return parse_config(argc, argv);
-	if (strcmp(argv[1], "init") == 0) {
-		std::cout << "init functions here";
-		return;
-	}
+
 	if (strcmp(argv[1], "start") == 0) {
-		std::cout << "start daemon";
+		cout << "start daemon";
 		return;
 	}
 	if (strcmp(argv[1], "stop") == 0) {
-		std::cout << "stop daemon";
+		cout << "stop daemon";
 		return;
 	}
 	if (strcmp(argv[1], "status") == 0) {
-		std::cout << "status: unknown";
+		cout << "status: unknown";
 		return;
 	}
 	if (strcmp(argv[1], "help") == 0) {
-		std::cout << "show help";
+		cmdHelper->help();
 		return;
 	}
-}
+} //ArgParser::parse
 
 void ArgParser::parse_device(int argc, char **argv) {
-	if (argc < 3) return alert_insufficient_params();
+	if (argc < 3) {
+		cout << toRed("Insufficient parmeters!");
+		return;
+	}
 
 	if ( strcmp(argv[2], "ls") == 0 ) {
 		cmdHelper->deviceList();
@@ -54,9 +51,7 @@ void ArgParser::parse_device(int argc, char **argv) {
 				uint16_t arg_value = std::stoi(argv[3]);
 				cmdHelper->deviceSet(arg_value);
 			} catch (std::invalid_argument &err) {
-				std::cout << Colors::Foreground::Red;
-				std::cout << "Invalid argument!";
-				std::cout << Colors::Modifiers::Reset << std::endl;
+				cout << toRed("Invalid argument!") << endl;
 				cmdHelper->deviceHelp();
 			}
 		} else { // midicmd device set
@@ -77,29 +72,32 @@ void ArgParser::parse_device(int argc, char **argv) {
 }
 
 void ArgParser::parse_config(int argc, char **argv) {
-	if (argc < 3) return alert_insufficient_params();	
+	if (argc < 3) {
+		cout << toRed("Insufficient parmeters!");
+		return;
+	}
 
 	if ( strcmp(argv[2], "ls") == 0 ) {
-		std::cout << "Show config contents" << std::endl; //TODO
+		cout << "Show config contents" << endl; //TODO
 		return;
 	}
 	if ( strcmp(argv[2], "rm") == 0 ) {
-		std::cout << "Delete config contents" << std::endl; //TODO
+		cout << "Delete config contents" << endl; //TODO
 		return;
 	}
 
 	if ( strcmp(argv[2], "init") == 0 ) {
-		std::cout << "Created config file" << std::endl; //TODO
+		cout << "Created config file" << endl; //TODO
 		return;
 	}
 
 	if ( strcmp(argv[2], "reset") == 0 ) {
-		std::cout << "Config file reset" << std::endl; //TODO
+		cout << "Config file reset" << endl; //TODO
 		return;
 	}
 
 	if ( strcmp(argv[2], "help") == 0 ) {
-		std::cout << "config help" << std::endl; //TODO
+		cout << "config help" << endl; //TODO
 		return;
 	}
 }
