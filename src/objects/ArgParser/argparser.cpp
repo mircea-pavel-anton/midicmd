@@ -21,18 +21,25 @@ void ArgParser::parse(int argc, char **argv) {
 		cout << "start daemon";
 		return;
 	}
+
 	if (command.compare("stop") == 0) {
 		cout << "stop daemon";
 		return;
 	}
+
 	if (command.compare("status") == 0) {
 		cout << "status: unknown";
 		return;
 	}
+
 	if (command.compare("help") == 0) {
 		cmdHelper->help();
 		return;
 	}
+
+	// if we got this far, then argv[1] was an unknown command
+	cout << toRed("Unknown command!") << endl;
+	cout << "Run " << toYellow("midicmd help") << " for more details." << endl;
 } //ArgParser::parse
 
 void ArgParser::parse_device(int argc, char **argv) {
@@ -44,6 +51,11 @@ void ArgParser::parse_device(int argc, char **argv) {
 
 	if (command.compare("ls") == 0) {
 		cmdHelper->deviceList();
+		return;
+	}
+
+	if (command.compare("ps") == 0) {
+		cmdHelper->deviceStatus();
 		return;
 	}
 
@@ -71,6 +83,10 @@ void ArgParser::parse_device(int argc, char **argv) {
 		cmdHelper->deviceHelp();
 		return;
 	}
+
+	// if we got this far, then argv[1] was an unknown command
+	cout << toRed("Unknown command!") << endl;
+	cout << "Run " << toYellow("midicmd device help") << " for more details." << endl;
 }
 
 void ArgParser::parse_config(int argc, char **argv) {
