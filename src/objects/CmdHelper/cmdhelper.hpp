@@ -9,6 +9,9 @@ class CmdHelper {
 		CmdHelper();
 		~CmdHelper();
 
+		void help();
+
+		// Device related methods
 		uint16_t deviceList();
 		void deviceSet();
 		void deviceSet(uint16_t);
