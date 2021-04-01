@@ -3,9 +3,12 @@
 
 #include "../../../lib/RtMidi.hpp"
 #include "../Utils/utils.hpp"
+#include "../Device/device.hpp"
 
 class MidiHelper {
 	public:
+		Device inputDevice, outputDevice;
+
 		MidiHelper();
 		~MidiHelper();
 		vector<string> getInputDevices();
@@ -20,7 +23,7 @@ class MidiHelper {
 		RtMidiOut *midiOut;
 
 		vector<string> getDevices(RtMidi *);
-		void setDevice(RtMidi *, uint16_t);
+		void setDevice(RtMidi *, uint16_t&, Device&);
 }; //MidiHelper
 
 #endif //MIDIHELPER_CLASS
