@@ -1,6 +1,7 @@
 #ifndef UTILS_HEADER
 #define UTILS_HEADER
 
+#include <iostream>
 #include <string>
 #include <vector>
 
