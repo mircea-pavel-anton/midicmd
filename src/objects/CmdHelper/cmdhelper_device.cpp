@@ -15,9 +15,9 @@ uint16_t CmdHelper::deviceList() {
 
 void CmdHelper::deviceSet() {
 	uint16_t device_count = deviceList();
-	string user_input;
+	string user_input = "";
 	uint16_t value;
-	bool status = false;
+	bool is_value_ok = false;
 
 	cout << endl;
 	do {
@@ -25,12 +25,12 @@ void CmdHelper::deviceSet() {
 		cin >> user_input;
 		try {
 			value = std::stoi(user_input);
-			status = (value < device_count && value >= 0);
+			is_value_ok = (value < device_count && value >= 0);
 		} catch (std::invalid_argument &err) {
 			cout << toRed("Invalid argument!") << endl;
-			status = false;
+			is_value_ok = false;
 		}
-	} while (!status);
+	} while (!is_value_ok);
 
 	deviceSet(value);
 }
