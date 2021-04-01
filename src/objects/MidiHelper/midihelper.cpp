@@ -20,9 +20,9 @@ MidiHelper::~MidiHelper() {
 	delete midiOut;
 }
 
-std::vector<std::string> MidiHelper::getDevices(RtMidi *midi) {
+vector<string> MidiHelper::getDevices(RtMidi *midi) {
 	uint16_t port_count = midi->getPortCount();
-	std::vector<std::string> devices;
+	vector<string> devices;
 
 	for (uint16_t i = 0; i < port_count; i++) {
 		try {
@@ -36,8 +36,8 @@ std::vector<std::string> MidiHelper::getDevices(RtMidi *midi) {
 	return devices;
 }
 
-std::vector<std::string> MidiHelper::getInputDevices() { return getDevices(midiIn); }
-std::vector<std::string> MidiHelper::getOutputDevices() { return getDevices(midiOut); }
+vector<string> MidiHelper::getInputDevices() { return getDevices(midiIn); }
+vector<string> MidiHelper::getOutputDevices() { return getDevices(midiOut); }
 
 void MidiHelper::setDevice(RtMidi *midi, uint16_t port_id) {
 	if (port_id > midi->getPortCount()) {

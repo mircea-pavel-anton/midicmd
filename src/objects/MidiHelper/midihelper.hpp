@@ -2,17 +2,16 @@
 #define MIDIHELPER_CLASS
 
 #include <cstdlib>
-#include <string>
-#include <vector>
 
 #include "../../../lib/RtMidi.hpp"
+#include "../Utils/utils.hpp"
 
 class MidiHelper {
 	public:
 		MidiHelper();
 		~MidiHelper();
-		std::vector<std::string> getInputDevices();
-		std::vector<std::string> getOutputDevices();
+		vector<string> getInputDevices();
+		vector<string> getOutputDevices();
 
 		void setInputDevice(uint16_t);
 		void setOutputDevice(uint16_t);
@@ -22,7 +21,7 @@ class MidiHelper {
 		RtMidiIn *midiIn;
 		RtMidiOut *midiOut;
 
-		std::vector<std::string> getDevices(RtMidi *);
+		vector<string> getDevices(RtMidi *);
 		void setDevice(RtMidi *, uint16_t);
 }; //MidiHelper
 
