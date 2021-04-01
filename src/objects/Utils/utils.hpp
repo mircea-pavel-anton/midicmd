@@ -62,9 +62,4 @@ inline string toBold(string str) {
 	return Colors::Modifiers::Bright + str + Colors::Modifiers::Reset;
 }
 
-inline bool file_exists (const string& name) {
-	struct stat buffer;
-	return (stat (name.c_str(), &buffer) == 0);
-}
-
 #endif //UTILS_HEADER
