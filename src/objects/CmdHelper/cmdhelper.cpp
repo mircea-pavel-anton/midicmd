@@ -22,12 +22,24 @@ void CmdHelper::Start() {
 		return;
 	}
 
-	std::ofstream file(pidFile);
 	// TODO: start driver daemon
 	int pid = 1995;
+	setPID(pid);
+	cout << toYellow("Daemon started!") << endl;
+}
+
+int CmdHelper::getPID() {
+	std::ifstream file(pidFile);
+	int pid = 0;
+	file >> pid;
+	file.close();
+	return pid;
+}
+
+void CmdHelper::setPID(int pid) {
+	std::ofstream file(pidFile);
 	file << pid;
 	file.close();
-	cout << toYellow("Daemon started!") << endl;
 }
 
 void CmdHelper::Stop() {
@@ -36,15 +48,12 @@ void CmdHelper::Stop() {
 		return;
 	}
 
-	std::ifstream file(pidFile);
-	int pid = 0;
-	file >> pid;
-	kill(pid, SIGTERM);
-	std::remove(pidFile.c_str());
+	kill(getPID(), SIGTERM);
+	std::filesystem::remove(pidFile);
 	cout << toYellow("Daemon stopped!") << endl;
 }
 
-bool CmdHelper::isRunning() { return file_exists(pidFile); }
+bool CmdHelper::isRunning() { return std::filesystem::exists(pidFile); }
 
 void CmdHelper::help() {
 	cout << Colors::Foreground::Yellow;

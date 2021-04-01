@@ -5,6 +5,7 @@
 #include "../Utils/utils.hpp"
 #include <fstream>
 #include <signal.h>
+#include <filesystem>
 
 class CmdHelper {
 	public:
@@ -28,6 +29,9 @@ class CmdHelper {
 	private:
 		const string pidFile = "/var/run/midicmd.pid";
 		MidiHelper *midiHelper;
+
+		int getPID();
+		void setPID(int);
 
 		bool isRunning();
 
