@@ -1,9 +1,6 @@
 #ifndef ARGPARSER_CLASS
 #define ARGPARSER_CLASS
 
-#include <cstring>
-#include <iostream>
-
 #include "../Utils/utils.hpp"
 #include "../CmdHelper/cmdhelper.hpp"
 
