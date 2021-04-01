@@ -58,7 +58,7 @@ inline string toGreen(string str) {
 }
 
 inline string toBold(string str) {
-	return Colors::Foreground::Yellow + str + Colors::Modifiers::Reset;
+	return Colors::Modifiers::Bright + str + Colors::Modifiers::Reset;
 }
 
 #endif //UTILS_HEADER
