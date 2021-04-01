@@ -15,15 +15,24 @@ uint16_t CmdHelper::deviceList() {
 
 void CmdHelper::deviceSet() {
 	uint16_t device_count = deviceList();
-	uint16_t user_input;
+	string user_input;
+	uint16_t value;
+	bool status = false;
 
 	cout << endl;
 	do {
 		cout << "Choose your device [0-" << device_count-1 << "]: ";
 		cin >> user_input;
-	} while (user_input < 0 || user_input >= device_count);
+		try {
+			value = std::stoi(user_input);
+			status = (value < device_count && value >= 0);
+		} catch (std::invalid_argument &err) {
+			cout << toRed("Invalid argument!") << endl;
+			status = false;
+		}
+	} while (!status);
 
-	deviceSet(user_input);
+	deviceSet(value);
 }
 
 void CmdHelper::deviceSet(uint16_t port_id) {
