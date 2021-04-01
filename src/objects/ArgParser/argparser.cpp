@@ -9,7 +9,7 @@ ArgParser::~ArgParser() {
 
 void ArgParser::parse(int argc, char **argv) {
 	if (argc < 2) {
-		cout << toRed("Insufficient parmeters!");
+		cout << toRed("Insufficient parmeters!") << endl;
 		return;
 	}
 	string command(argv[1]);
@@ -37,7 +37,7 @@ void ArgParser::parse(int argc, char **argv) {
 
 void ArgParser::parse_device(int argc, char **argv) {
 	if (argc < 3) {
-		cout << toRed("Insufficient parmeters!");
+		cout << toRed("Insufficient parmeters!") << endl;
 		return;
 	}
 	string command = argv[2];
@@ -75,7 +75,7 @@ void ArgParser::parse_device(int argc, char **argv) {
 
 void ArgParser::parse_config(int argc, char **argv) {
 	if (argc < 3) {
-		cout << toRed("Insufficient parmeters!");
+		cout << toRed("Insufficient parmeters!") << endl;
 		return;
 	}
 	string command = argv[2];
