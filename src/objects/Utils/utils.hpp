@@ -1,5 +1,14 @@
-#ifndef UTILS_CLASS
-#define UTILS_CLASS
+#ifndef UTILS_HEADER
+#define UTILS_HEADER
+
+#include <string>
+#include <vector>
+
+using std::cout;
+using std::cin;
+using std::endl;
+using std::string;
+using std::vector;
 
 namespace Colors {
 	namespace Foreground {
@@ -35,8 +44,20 @@ namespace Colors {
 	} //Modifiers
 } //Colors
 
-class Utils {
+inline string toYellow(string str) {
+	return Colors::Foreground::Yellow + str + Colors::Modifiers::Reset;
+}
 
-}; //Utils
+inline string toRed(string str) {
+	return Colors::Foreground::Red + str + Colors::Modifiers::Reset;
+}
 
-#endif //UTILS_CLASS
+inline string toGreen(string str) {
+	return Colors::Foreground::Green + str + Colors::Modifiers::Reset;
+}
+
+inline string toBold(string str) {
+	return Colors::Foreground::Yellow + str + Colors::Modifiers::Reset;
+}
+
+#endif //UTILS_HEADER
