@@ -15,10 +15,10 @@ void CmdHelper::help() {
 	cout << "midicmd [OPTION]" << endl << endl;
 
 	cout << "Available options: " << endl;
-	cout << "  device [OPTION]  " << "Manage MiDi devices" << endl;
-	cout << "  config [OPTION]  " << "Manage the config file" << endl;
+	cout << toBold("  device [OPTION]  ") << "Manage MiDi devices" << endl;
+	cout << toBold("  config [OPTION]  ") << "Manage the config file" << endl;
 	cout << endl;
-	cout << "  start   " << "Start the midicmd daemon" << endl;
-	cout << "  stop    " << "Stop the midicmd daemon" << endl;
-	cout << "  status  " << "Reports the status of the midicmd daemon [running/stopped]" << endl;
+	cout << toBold("  start   ") << "Start the midicmd daemon" << endl;
+	cout << toBold("  stop    ") << "Stop the midicmd daemon" << endl;
+	cout << toBold("  status  ") << "Reports the status of the midicmd daemon [running/stopped]" << endl;
 }
