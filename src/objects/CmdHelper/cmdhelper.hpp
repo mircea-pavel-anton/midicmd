@@ -19,9 +19,9 @@ class CmdHelper {
 		void Status();
 
 		// Device related methods
-		uint16_t deviceList();
+		void deviceList();
 		void deviceSet();
-		void deviceSet(uint16_t);
+		void deviceSet(int);
 		void deviceStatus();
 		void deviceRemove();
 		void deviceHelp();
