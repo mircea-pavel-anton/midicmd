@@ -1,8 +1,6 @@
 #ifndef MIDIHELPER_CLASS
 #define MIDIHELPER_CLASS
 
-#include <cstdlib>
-
 #include "../../../lib/RtMidi.hpp"
 #include "../Utils/utils.hpp"
 
