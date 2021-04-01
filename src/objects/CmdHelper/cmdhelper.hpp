@@ -3,6 +3,8 @@
 
 #include "../MidiHelper/midihelper.hpp"
 #include "../Utils/utils.hpp"
+#include <fstream>
+#include <signal.h>
 
 class CmdHelper {
 	public:
@@ -10,6 +12,11 @@ class CmdHelper {
 		~CmdHelper();
 
 		void help();
+
+		// Generic methods
+		void Start();
+		void Stop();
+		void Status();
 
 		// Device related methods
 		uint16_t deviceList();
@@ -19,7 +26,11 @@ class CmdHelper {
 		void deviceRemove();
 		void deviceHelp();
 	private:
+		const string pidFile = "/var/run/midicmd.pid";
 		MidiHelper *midiHelper;
+
+		bool isRunning();
+
 }; //CmdHelper
 
 #endif //CMDHELPER_CLASS
