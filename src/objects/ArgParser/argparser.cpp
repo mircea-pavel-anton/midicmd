@@ -18,17 +18,17 @@ void ArgParser::parse(int argc, char **argv) {
 	if (command.compare("config") == 0) return parse_config(argc, argv);
 
 	if (command.compare("start") == 0) {
-		cout << "start daemon";
+		cmdHelper->Start();
 		return;
 	}
 
 	if (command.compare("stop") == 0) {
-		cout << "stop daemon";
+		cmdHelper->Stop();
 		return;
 	}
 
 	if (command.compare("status") == 0) {
-		cout << "status: unknown";
+		cmdHelper->Status();
 		return;
 	}
 
