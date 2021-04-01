@@ -5,7 +5,7 @@
 
 class Device {
     public:
-        int8_t portId;
+        int portId;
         string name;
         bool isSet;
 
