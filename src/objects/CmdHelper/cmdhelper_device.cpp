@@ -1,22 +1,21 @@
 #include "cmdhelper.hpp"
 
-uint16_t CmdHelper::deviceList() {
+void CmdHelper::deviceList() {
 	vector<string> devices = midiHelper->getInputDevices();
-	const uint16_t device_count = devices.size();
+	const int device_count = devices.size();
 
 	cout << toGreen( "There are " + std::to_string(device_count) + " devices available:" );
 	cout << endl;
-	for (uint16_t i = 0; i < device_count; i++) {
+	for (int i = 0; i < device_count; i++) {
 		cout << "\t" << i << ") " << devices[i] << endl;
 	}
-
-	return device_count;
 }
 
 void CmdHelper::deviceSet() {
-	uint16_t device_count = deviceList();
+	deviceList();
+	int device_count = midiHelper->getInputPortCount();
 	string user_input = "";
-	uint16_t value;
+	int value;
 	bool is_value_ok = false;
 
 	cout << endl;
@@ -35,7 +34,7 @@ void CmdHelper::deviceSet() {
 	deviceSet(value);
 }
 
-void CmdHelper::deviceSet(uint16_t port_id) {
+void CmdHelper::deviceSet(int port_id) {
 	try {
 		midiHelper->setInputDevice(port_id);
 		cout << toGreen("Device changed!") << endl;
