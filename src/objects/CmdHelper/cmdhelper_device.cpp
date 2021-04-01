@@ -44,6 +44,25 @@ void CmdHelper::deviceSet(uint16_t port_id) {
 	}
 }
 
+void CmdHelper::deviceStatus() {
+	if (midiHelper->inputDevice.isSet) {
+		cout << "Currently listenting to: " << toYellow(midiHelper->inputDevice.name);
+		cout << " on port " << midiHelper->inputDevice.portId;
+		cout << endl;
+	} else {
+		cout << toRed("No input device set!") << endl;
+		return;
+	}
+
+	if (midiHelper->outputDevice.isSet) {
+		cout << "Currently talking to: " << toYellow(midiHelper->outputDevice.name);
+		cout << " on port " << midiHelper->outputDevice.portId;
+		cout << endl;
+	} else {
+		cout << "The current device does not support MiDi output." << endl;
+	}
+}
+
 void CmdHelper::deviceRemove() {
 	midiHelper->clearDevice();
 	cout << toGreen("Device cleared!") << endl;

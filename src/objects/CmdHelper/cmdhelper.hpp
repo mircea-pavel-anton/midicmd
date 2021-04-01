@@ -15,6 +15,7 @@ class CmdHelper {
 		uint16_t deviceList();
 		void deviceSet();
 		void deviceSet(uint16_t);
+		void deviceStatus();
 		void deviceRemove();
 		void deviceHelp();
 	private:
