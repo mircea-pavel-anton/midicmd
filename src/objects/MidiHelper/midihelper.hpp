@@ -14,8 +14,10 @@ class MidiHelper {
 		vector<string> getInputDevices();
 		vector<string> getOutputDevices();
 
-		void setInputDevice(uint16_t);
-		void setOutputDevice(uint16_t);
+		void setInputDevice(int);
+		void setOutputDevice(int);
+
+		int getInputPortCount();
 
 		void clearDevice();
 	private:
@@ -23,7 +25,7 @@ class MidiHelper {
 		RtMidiOut *midiOut;
 
 		vector<string> getDevices(RtMidi *);
-		void setDevice(RtMidi *, uint16_t&, Device&);
+		void setDevice(RtMidi *, int&, Device&);
 }; //MidiHelper
 
 #endif //MIDIHELPER_CLASS

@@ -23,10 +23,10 @@ MidiHelper::~MidiHelper() {
 }
 
 vector<string> MidiHelper::getDevices(RtMidi *midi) {
-	uint16_t port_count = midi->getPortCount();
+	int port_count = midi->getPortCount();
 	vector<string> devices;
 
-	for (uint16_t i = 0; i < port_count; i++) {
+	for (int i = 0; i < port_count; i++) {
 		try {
 			devices.push_back( midi->getPortName(i) );
 		} catch (RtMidiError &err) {
@@ -41,7 +41,7 @@ vector<string> MidiHelper::getDevices(RtMidi *midi) {
 vector<string> MidiHelper::getInputDevices() { return getDevices(midiIn); }
 vector<string> MidiHelper::getOutputDevices() { return getDevices(midiOut); }
 
-void MidiHelper::setDevice(RtMidi *midi, uint16_t &port_id, Device &device) {
+void MidiHelper::setDevice(RtMidi *midi, int &port_id, Device &device) {
 	if (port_id > midi->getPortCount()) {
 		throw std::range_error("Port number out of range!");
 	}
@@ -49,8 +49,10 @@ void MidiHelper::setDevice(RtMidi *midi, uint16_t &port_id, Device &device) {
 	device.set(port_id, midi->getPortName(port_id));
 }
 
-void MidiHelper::setInputDevice(uint16_t port_id) {return setDevice(midiIn, port_id, inputDevice); }
-void MidiHelper::setOutputDevice(uint16_t port_id) { return setDevice(midiOut, port_id, outputDevice); }
+void MidiHelper::setInputDevice(int port_id) {return setDevice(midiIn, port_id, inputDevice); }
+void MidiHelper::setOutputDevice(int port_id) { return setDevice(midiOut, port_id, outputDevice); }
+
+int MidiHelper::getInputPortCount() { return midiIn->getPortCount(); }
 
 void MidiHelper::clearDevice() {
 	midiIn->closePort();
