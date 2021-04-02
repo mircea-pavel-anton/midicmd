@@ -1,23 +1,26 @@
 #ifndef CONFIG_HELPER_CLASS
 #define CONFIG_HELPER_CLASS
 
-#include<string>
-#include<map>
-using std::string;
-using std::map;
-
+#include <fstream>
+#include <filesystem>
+#include <string>
+#include <map>
 class ConfigHelper {
-    public:
-        ConfigHelper() {};
-        ~ConfigHelper() {};
+	public:
+		ConfigHelper() {};
+		~ConfigHelper() {};
 
-        void write(int, map<int, string>);
+		void write(int, std::map<int, std::string>);
 
-        int readDevice();
-        map<int, string> readCommands();
+		int getDevice();
+		std::map<int, std::string> getCommands();
 
-    private:
-        string filePath;
+	private:
+		std::string filePath = "/etc/midicmd/config.txt";
+		int device = -1;
+		std::map<int, std::string> commands = {};
+
+		void read();
 };
 
 #endif //CONFIG_HELPER_CLASS
