@@ -54,6 +54,8 @@ void MidiHelper::setOutputDevice(int port_id) { return setDevice(midiOut, port_i
 
 int MidiHelper::getInputPortCount() { return midiIn->getPortCount(); }
 
+double MidiHelper::getMessage(vector<unsigned char> &data) { return midiIn->getMessage(&data); }
+
 void MidiHelper::clearDevice() {
 	midiIn->closePort();
 	inputDevice.clear();

@@ -20,6 +20,8 @@ class MidiHelper {
 		int getInputPortCount();
 
 		void clearDevice();
+
+		double getMessage(vector<unsigned char>&);
 	private:
 		RtMidiIn *midiIn;
 		RtMidiOut *midiOut;
