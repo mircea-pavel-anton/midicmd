@@ -22,9 +22,7 @@ void CmdHelper::Start() {
 		return;
 	}
 
-	// TODO: start driver daemon
-	int pid = 1995;
-	setPID(pid);
+	daemon();
 	cout << toYellow("Daemon started!") << endl;
 }
 
@@ -54,6 +52,26 @@ void CmdHelper::Stop() {
 }
 
 bool CmdHelper::isRunning() { return std::filesystem::exists(pidFile); }
+
+void CmdHelper::daemon() {
+	midiHelper->setInputDevice(2); //TODO: 2 is a temporary value. CHANGE ME!!!!
+
+	vector<unsigned char> midi_data;
+	double timestamp = 0;
+	while (true) {
+		timestamp = midiHelper->getMessage(midi_data);
+
+		if (midi_data.size() > 0 && timestamp > 0) {
+			int event_id = ( atoi( std::to_string(midi_data.at(0)).c_str() ) / 16 ) * 16;
+			int channel = atoi( std::to_string(midi_data.at(0)).c_str() ) - event_id + 1;
+			int note = atoi( std::to_string(midi_data.at(1)).c_str() );
+
+			cout << "Event ID: " << event_id << endl;
+			cout << "Channel: " << channel << endl;
+			cout << "Note ID: " << note << endl;
+		}
+	}
+}
 
 void CmdHelper::help() {
 	cout << Colors::Foreground::Yellow;

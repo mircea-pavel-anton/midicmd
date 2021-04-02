@@ -6,6 +6,7 @@
 #include <fstream>
 #include <signal.h>
 #include <filesystem>
+#include <unistd.h>
 
 class CmdHelper {
 	public:
@@ -32,6 +33,8 @@ class CmdHelper {
 
 		int getPID();
 		void setPID(int);
+
+		void daemon();
 
 		bool isRunning();
 
