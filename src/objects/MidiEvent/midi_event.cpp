@@ -1,14 +1,27 @@
 #include "midi_event.hpp"
 
-MidiEvent::MidiEvent(std::vector<unsigned char> &data) {
-	id = data.at(0) / 16 * 16;
-	channel = data.at(0) - id + 1;
-	note = data.at(1);
-	velocity = data.at(2);
+MidiEvent::MidiEvent(double _timestamp, std::vector<unsigned char> _code) {
+	if (_code.size() != 3) {
+		timestamp = 0;
+		code = 0;
+		throw std::runtime_error("Invalid MiDi code!");
+	} else {
+		timestamp = _timestamp;
+
+		std::stringstream ss;
+		ss << (int)_code[0] << (int)_code[1] << (int)_code[2];
+		code = std::atoi(ss.str().c_str());
+
+		event = _code[0] / 16 * 16;
+		channel = _code[0] % 16 + 1;
+		note = _code[1];
+		velocity = _code[2];
+	}
+
 }
 
 std::string MidiEvent::getEventName() {
-	switch (id) {
+	switch (getEventId()) {
 		case 128: return "Note Off";
 		case 144: return "Note On";
 		case 176: return "Control Change";

@@ -5,25 +5,29 @@
 #include <string>
 #include <sstream>
 
+#include "../Utils/utils.hpp"
+
 class MidiEvent {
 	public:
 		MidiEvent() {};
-		MidiEvent(std::vector<unsigned char>&);
+		MidiEvent(double, std::vector<unsigned char>);
 
 		std::string getEventName();
 		std::string getNoteName();
-		int getId() { return id; }
+		int getEventId() { return event; };
 		int getChannel() { return channel; };
+		int getNoteId() { return note; };
 		int getVelocity() { return velocity; };
 		double getTimestamp() { return timestamp; }
+		int getCode() { return code; };
 
-		void setTimestamp(double _t) { timestamp = _t; }
-		bool isOk() { return timestamp != 0 && id != 0; };
+		bool isOk() { return timestamp != 0 && code != 0; };
 	private:
 		double timestamp = 0;
-		int id = 0;
-		int channel = 0;
+		int code = 0;
 		int note = 0;
+		int event = 0;
+		int channel = 0;
 		int velocity = 0;
 }; //MidiEvent
 
