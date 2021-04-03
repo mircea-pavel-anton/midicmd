@@ -2,6 +2,7 @@
 #define CMDHELPER_CLASS
 
 #include <unistd.h>
+#include <memory>
 
 #include "../MidiHelper/midi_helper.hpp"
 #include "../Utils/utils.hpp"
@@ -28,8 +29,6 @@ class CmdHelper {
 	private:
 		MidiHelper *midiHelper;
 		ConfigHelper *configHelper;
-
-		void daemon();
 
 		bool isRunning();
 }; //CmdHelper
