@@ -9,13 +9,13 @@ class Config {
 		// Instance variables
 		int device;
 		bool feedback;
-		std::map<int, std::string> commands;
+		std::map<int, const char*> commands;
 		bool isSet;
 
 		// Constructors
 		Config() : device(-1), feedback(false), commands({}), isSet(false) {};
 
-		Config(int _device, bool _feedback, std::map<int, std::string> _commands) :
+		Config(int _device, bool _feedback, std::map<int, const char*> _commands) :
 			device(_device),
 			feedback(_feedback),
 			commands(_commands),
