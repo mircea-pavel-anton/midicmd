@@ -63,9 +63,14 @@ int MidiHelper::getInputPortCount() { return midiIn->getPortCount(); }
 MidiEvent MidiHelper::getMessage() {
 	std::vector<unsigned char> data;
 	double timestamp = midiIn->getMessage(&data);
-	MidiEvent event = MidiEvent(data);
-	event.setTimestamp(timestamp);
-	return event;
+
+	try {
+		MidiEvent event = MidiEvent(timestamp, data);
+		return event;
+	} catch (std::runtime_error &err) {
+		return MidiEvent();
+	}
+
 }
 
 void MidiHelper::clearDevice() {
