@@ -21,4 +21,5 @@ void CmdHelper::help() {
 	cout << toBold("  start   ") << "Start the midicmd daemon" << endl;
 	cout << toBold("  stop    ") << "Stop the midicmd daemon" << endl;
 	cout << toBold("  status  ") << "Reports the status of the midicmd daemon [running/stopped]" << endl;
+	cout << toBold("  run     ") << "Starts the actual midi driver in the foreground. Mostly used for testing purposes." << endl;
 }
