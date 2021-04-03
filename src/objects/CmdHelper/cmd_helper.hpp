@@ -29,6 +29,12 @@ class CmdHelper {
 		void deviceRemove();
 		void deviceHelp();
 
+		// Config related methods
+		void configInit();
+		void configReset();
+		bool configCheck();
+		void configHelp();
+
 		// Feedback related methods
 		void feedbackEnable();
 		void feedbackDisable();
