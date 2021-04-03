@@ -6,6 +6,15 @@ void CmdHelper::start() {
 		return;
 	}
 
+	if (configHelper->checkFile() == false) {
+		std::cout << toRed("Failed to parse config file!") << std::endl;
+		std::cout << "If no modifications have been made to the config file, run " << toYellow("midicmd config init");
+		std::cout << " to create a default file, and then customize it." << std::endl;
+		std::cout << "Run " << toYellow("midicmd config help") << " for more details on config file customizations";
+		std::cout << std::endl;
+		return;
+	}
+
 	system("systemctl start midicmd.service");
 
 	if (isRunning()) {
