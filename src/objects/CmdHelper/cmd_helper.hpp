@@ -28,6 +28,13 @@ class CmdHelper {
 		void deviceStatus();
 		void deviceRemove();
 		void deviceHelp();
+
+		// Feedback related methods
+		void feedbackEnable();
+		void feedbackDisable();
+		void feedbackStatus();
+		void feedbackHelp();
+
 	private:
 		MidiHelper *midiHelper;
 		ConfigHelper *configHelper;
