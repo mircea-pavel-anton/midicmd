@@ -62,14 +62,21 @@ void CmdHelper::daemon() {
 		timestamp = midiHelper->getMessage(midi_data);
 
 		if (midi_data.size() > 0 && timestamp > 0) {
-			int event_id = ( atoi( std::to_string(midi_data.at(0)).c_str() ) / 16 ) * 16;
-			int channel = atoi( std::to_string(midi_data.at(0)).c_str() ) - event_id + 1;
-			int note = atoi( std::to_string(midi_data.at(1)).c_str() );
+
+			int event_id = midi_data.at(0) / 16 * 16;
+			int channel = midi_data.at(0) - event_id + 1;
+			int note_id = midi_data.at(1);
+			int velocity = midi_data.at(2);
 
 			cout << "Event ID: " << event_id << endl;
-			cout << "Channel: " << channel << endl;
-			cout << "Note ID: " << note << endl;
+			cout << "Channel: " << channel   << endl;
+			cout << "Note ID: " << note_id   << endl;
+			cout << "Velocity: " << velocity << endl;
+			cout << endl;
+
 		}
+
+		usleep(10);
 	}
 }
 
