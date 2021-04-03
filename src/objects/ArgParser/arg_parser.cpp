@@ -13,6 +13,7 @@ void ArgParser::parse(int argc, char **argv) {
 	if (command.compare("start") == 0) return cmdHelper->start();
 	if (command.compare("stop") == 0) return cmdHelper->stop();
 	if (command.compare("status") == 0) return cmdHelper->status();
+	if (command.compare("run") == 0) return cmdHelper->run();
 
 	if (command.compare("help") == 0) return cmdHelper->help();
 

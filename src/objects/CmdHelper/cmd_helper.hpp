@@ -19,6 +19,8 @@ class CmdHelper {
 		void status();
 		void help();
 
+		void run();
+
 		// Device related methods
 		void deviceList();
 		void deviceSet();

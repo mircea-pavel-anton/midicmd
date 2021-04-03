@@ -63,3 +63,27 @@ bool CmdHelper::isRunning() {
 	
 	return (result.compare("1\n") == 0);
 }
+
+void CmdHelper::run() {
+	midiHelper->setInputDevice(2/*configHelper->getDevice()*/);
+	bool feedback = configHelper->isFeedbackEnabled();
+
+	std::map<int, const char*> commands = configHelper->getCommands();
+	std::map<int, const char*>::iterator iter;
+	MidiEvent event;
+	while (true) {
+		event = midiHelper->getMessage();
+
+		if (event.isOk()) {
+			std::cout << "Event code: " << event.getCode() << std::endl;
+
+			iter = commands.find(event.getCode());
+
+			if (iter != commands.end()) {
+				system(iter->second);
+			}
+		}
+
+		usleep(10);
+	}
+}
