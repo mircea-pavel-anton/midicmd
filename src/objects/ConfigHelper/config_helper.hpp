@@ -5,22 +5,25 @@
 #include <filesystem>
 #include <string>
 #include <map>
+
+#include "../Config/config.hpp"
+
 class ConfigHelper {
 	public:
 		ConfigHelper() {};
 		~ConfigHelper() {};
 
-		void write(int, std::map<int, std::string>);
+		void write(Config&);
 
 		int getDevice();
+		bool isFeedbackEnabled();
 		std::map<int, std::string> getCommands();
 
 	private:
+		Config cache;
 		std::string filePath = "/etc/midicmd/config.txt";
-		int device = -1;
-		std::map<int, std::string> commands = {};
 
-		void read();
+		void cacheFile();
 };
 
 #endif //CONFIG_HELPER_CLASS

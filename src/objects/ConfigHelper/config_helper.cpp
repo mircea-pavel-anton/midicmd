@@ -1,11 +1,12 @@
 #include "config_helper.hpp"
 
-void ConfigHelper::write(int device_id, std::map<int, std::string> commands) {
+void ConfigHelper::write(Config &config) {
 	std::ofstream file(filePath);
-	file << device_id << std::endl;
+	file << config.device << std::endl;
+	file << config.feedback << std::endl;
 
-	std::map<int, std::string>::iterator it = commands.begin();
-	for (it; it != commands.end(); ++it) {
+	std::map<int, std::string>::iterator it = config.commands.begin();
+	for (it; it != config.commands.end(); ++it) {
 		file << it->first << " " << it->second << std::endl;
 	}
 
@@ -13,27 +14,34 @@ void ConfigHelper::write(int device_id, std::map<int, std::string> commands) {
 }
 
 int ConfigHelper::getDevice() {
-	if (device == -1) read();
-	return device;
+	if (cache.isSet == false) cacheFile();
+	return cache.device;
 }
 
 std::map<int, std::string> ConfigHelper::getCommands() {
-	if (commands.empty()) read();
-	return commands;
+	if (cache.isSet == false) cacheFile();
+	return cache.commands;
 }
 
-void ConfigHelper::read() {
+bool ConfigHelper::isFeedbackEnabled() {
+	if (cache.isSet == false) cacheFile();
+	return cache.feedback;
+}
+
+void ConfigHelper::cacheFile() {
 	std::ifstream file(filePath);
 
 	// First line should be the device id
-	file >> device;
+	file >> cache.device;
+	file >> cache.feedback;
 
 	int key = 0;;
 	std::string value = "";
 
 	while (file >> key >> value) {
-		commands.insert( std::pair<int, std::string>(key, value) );
+		cache.commands.insert( std::pair<int, std::string>(key, value) );
 	}
 
+	cache.isSet = true;
 	file.close();
 }
