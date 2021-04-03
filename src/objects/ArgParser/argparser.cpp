@@ -1,14 +1,11 @@
 #include "argparser.hpp"
 
-ArgParser::ArgParser() { cmdHelper = new CmdHelper(); }
-ArgParser::~ArgParser() { delete cmdHelper; }
-
 void ArgParser::parse(int argc, char **argv) {
 	if (argc < 2) {
-		cout << toRed("Insufficient parmeters!") << endl;
+		std::cout << toRed("Insufficient parmeters!") << std::endl;
 		return;
 	}
-	string command(argv[1]);
+	std::string command(argv[1]);
 
 	if (command.compare("device") == 0) return parse_device(argc, argv);
 	if (command.compare("config") == 0) return parse_config(argc, argv);
@@ -20,16 +17,17 @@ void ArgParser::parse(int argc, char **argv) {
 	if (command.compare("help") == 0) return cmdHelper->help();
 
 	// if we got this far, then argv[1] was an unknown command
-	cout << toRed("Unknown command!") << endl;
-	cout << "Run " << toYellow("midicmd help") << " for more details." << endl;
+	std::cout << toRed("Unknown command!") << std::endl;
+	std::cout << "Run " << toYellow("midicmd help") << " for more details.";
+	std::cout << std::endl;
 } //ArgParser::parse
 
 void ArgParser::parse_device(int argc, char **argv) {
 	if (argc < 3) {
-		cout << toRed("Insufficient parmeters!") << endl;
+		std::cout << toRed("Insufficient parmeters!") << std::endl;
 		return;
 	}
-	string command = argv[2];
+	std::string command = argv[2];
 
 	if (command.compare("ls") == 0) return cmdHelper->deviceList();
 	if (command.compare("ps") == 0) return cmdHelper->deviceStatus();
@@ -41,7 +39,7 @@ void ArgParser::parse_device(int argc, char **argv) {
 				const int arg_value = std::stoi(argv[3]);
 				cmdHelper->deviceSet(arg_value);
 			} catch (std::invalid_argument &err) {
-				cout << toRed("Invalid argument!") << endl;
+				std::cout << toRed("Invalid argument!") << std::endl;
 				cmdHelper->deviceHelp();
 			}
 		} else { // midicmd device set
@@ -53,42 +51,44 @@ void ArgParser::parse_device(int argc, char **argv) {
 	if (command.compare("help") == 0) return cmdHelper->deviceHelp();
 
 	// if we got this far, then argv[1] was an unknown command
-	cout << toRed("Unknown command!") << endl;
-	cout << "Run " << toYellow("midicmd device help") << " for more details." << endl;
+	std::cout << toRed("Unknown command!") << std::endl;
+	std::cout << "Run " << toYellow("midicmd device help") << " for more details.";
+	std::cout << std::endl;
 }
 
 void ArgParser::parse_config(int argc, char **argv) {
 	if (argc < 3) {
-		cout << toRed("Insufficient parmeters!") << endl;
+		std::cout << toRed("Insufficient parmeters!") << std::endl;
 		return;
 	}
-	string command = argv[2];
+	std::string command = argv[2];
 
 	if (command.compare("ls") == 0) {
-		cout << "Show config contents" << endl; //TODO
+		std::cout << "Show config contents" << std::endl; //TODO
 		return;
 	}
 	if (command.compare("rm") == 0) {
-		cout << "Delete config contents" << endl; //TODO
+		std::cout << "Delete config contents" << std::endl; //TODO
 		return;
 	}
 
 	if (command.compare("init") == 0) {
-		cout << "Created config file" << endl; //TODO
+		std::cout << "Created config file" << std::endl; //TODO
 		return;
 	}
 
 	if (command.compare("reset") == 0) {
-		cout << "Config file reset" << endl; //TODO
+		std::cout << "Config file reset" << std::endl; //TODO
 		return;
 	}
 
 	if (command.compare("help") == 0) {
-		cout << "config help" << endl; //TODO
+		std::cout << "config help" << std::endl; //TODO
 		return;
 	}
 
 	// if we got this far, then argv[1] was an unknown command
-	cout << toRed("Unknown command!") << endl;
-	cout << "Run " << toYellow("midicmd config help") << " for more details." << endl;
+	std::cout << toRed("Unknown command!") << std::endl;
+	std::cout << "Run " << toYellow("midicmd config help") << " for more details.";
+	std::cout << std::endl;
 }

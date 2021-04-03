@@ -6,8 +6,9 @@
 
 class ArgParser {
 	public:
-		ArgParser();
-		~ArgParser();
+		ArgParser() { cmdHelper = new CmdHelper(); };
+		~ArgParser() { delete cmdHelper; };
+
 		void parse(int, char**);
 
 	private:
