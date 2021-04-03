@@ -14,16 +14,20 @@ class ConfigHelper {
 		~ConfigHelper() {};
 
 		void write(Config&);
+		bool checkFile();
 
 		int getDevice();
 		bool isFeedbackEnabled();
-		std::map<int, std::string> getCommands();
+		std::map<int, const char *> getCommands();
 
+		void setDevice(int);
+		void setFeedback(bool);
+		void setCommands(std::map<int, const char*>);
 	private:
 		Config cache;
 		std::string filePath = "/etc/midicmd/config.txt";
 
-		void cacheFile();
+		void cacheFileContents();
 };
 
 #endif //CONFIG_HELPER_CLASS
