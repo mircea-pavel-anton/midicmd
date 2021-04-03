@@ -41,6 +41,7 @@ void CmdHelper::deviceSet() {
 void CmdHelper::deviceSet(int port_id) {
 	try {
 		midiHelper->setInputDevice(port_id);
+		configHelper->setDevice(port_id);
 		std::cout << toGreen("Device changed!") << std::endl;
 	} catch(std::range_error &err) {
 		std::cout << toRed("Failed to set device. Index out of range!");
@@ -49,6 +50,16 @@ void CmdHelper::deviceSet(int port_id) {
 }
 
 void CmdHelper::deviceStatus() {
+	if (configHelper->checkFile() == false) {
+		std::cout << toRed("Failed to parse config file!") << std::endl;
+		std::cout << "If no modifications have been made to the config file, run " << toYellow("midicmd config init");
+		std::cout << " to create a default file, and then customize it." << std::endl;
+		std::cout << "Run " << toYellow("midicmd config help") << " for more details on config file customizations";
+		std::cout << std::endl;
+		return;
+	}
+	midiHelper->setInputDevice(configHelper->getDevice());
+
 	if (midiHelper->inputDevice.isSet()) {
 		std::cout << "Currently listenting to: ";
 		std::cout << toYellow(midiHelper->inputDevice.getName());
@@ -59,19 +70,33 @@ void CmdHelper::deviceStatus() {
 		return;
 	}
 
-	if (midiHelper->outputDevice.isSet()) {
-		std::cout << "Currently talking to: ";
-		std::cout << toYellow(midiHelper->outputDevice.getName());
-		std::cout << " on port " << midiHelper->outputDevice.getPort();
-		std::cout << std::endl;
+	if (configHelper->isFeedbackEnabled()) {
+		if (midiHelper->outputDevice.isSet()) {
+			std::cout << "Currently talking to: ";
+			std::cout << toYellow(midiHelper->outputDevice.getName());
+			std::cout << " on port " << midiHelper->outputDevice.getPort();
+			std::cout << std::endl;
+		} else {
+			std::cout << "The current device does not support MiDi output.";
+			std::cout << std::endl;
+		}
 	} else {
-		std::cout << "The current device does not support MiDi output.";
-		std::cout << std::endl;
+		std::cout << "Midi feedback is disabled in the config. ";
+		std::cout << "No device selected for output." << std::endl;
 	}
 }
 
 void CmdHelper::deviceRemove() {
-	midiHelper->clearDevice();
+	if (configHelper->checkFile() == false) {
+		std::cout << toRed("Failed to parse config file!") << std::endl;
+		std::cout << "If no modifications have been made to the config file, run " << toYellow("midicmd config init");
+		std::cout << " to create a default file, and then customize it." << std::endl;
+		std::cout << "Run " << toYellow("midicmd config help") << " for more details on config file customizations";
+		std::cout << std::endl;
+		return;
+	}
+
+	configHelper->setDevice(-1);
 	std::cout << toGreen("Device cleared!") << std::endl;
 }
 
