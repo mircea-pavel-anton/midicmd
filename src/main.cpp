@@ -1,4 +1,4 @@
-#include "objects/ArgParser/argparser.hpp"
+#include "objects/ArgParser/arg_parser.hpp"
 
 int main(int argc, char **argv) {
 	ArgParser parser = ArgParser();

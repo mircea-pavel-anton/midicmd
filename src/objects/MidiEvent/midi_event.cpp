@@ -1,6 +1,5 @@
 #include "midi_event.hpp"
 
-
 MidiEvent::MidiEvent(std::vector<unsigned char> &data) {
 	id = data.at(0) / 16 * 16;
 	channel = data.at(0) - id + 1;
@@ -30,6 +29,3 @@ std::string MidiEvent::getNoteName() {
 
 	return stream.str();
 }
-
-int MidiEvent::getChannel() { return channel; }
-int MidiEvent::getVelocity() { return velocity; }

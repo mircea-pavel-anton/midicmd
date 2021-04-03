@@ -1,4 +1,4 @@
-#include "argparser.hpp"
+#include "arg_parser.hpp"
 
 void ArgParser::parse(int argc, char **argv) {
 	if (argc < 2) {
@@ -10,9 +10,9 @@ void ArgParser::parse(int argc, char **argv) {
 	if (command.compare("device") == 0) return parse_device(argc, argv);
 	if (command.compare("config") == 0) return parse_config(argc, argv);
 
-	if (command.compare("start") == 0) return cmdHelper->Start();
-	if (command.compare("stop") == 0) return cmdHelper->Stop();
-	if (command.compare("status") == 0) return cmdHelper->Status();
+	if (command.compare("start") == 0) return cmdHelper->start();
+	if (command.compare("stop") == 0) return cmdHelper->stop();
+	if (command.compare("status") == 0) return cmdHelper->status();
 
 	if (command.compare("help") == 0) return cmdHelper->help();
 

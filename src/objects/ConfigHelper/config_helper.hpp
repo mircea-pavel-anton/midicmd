@@ -10,7 +10,7 @@
 
 class ConfigHelper {
 	public:
-		ConfigHelper() {};
+		ConfigHelper() { cache = Config(); };
 		~ConfigHelper() {};
 
 		void write(Config&);

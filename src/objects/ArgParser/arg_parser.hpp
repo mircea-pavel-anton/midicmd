@@ -2,7 +2,7 @@
 #define ARGPARSER_CLASS
 
 #include "../Utils/utils.hpp"
-#include "../CmdHelper/cmdhelper.hpp"
+#include "../CmdHelper/cmd_helper.hpp"
 
 class ArgParser {
 	public:

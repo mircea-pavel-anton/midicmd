@@ -1,24 +1,22 @@
 #ifndef CMDHELPER_CLASS
 #define CMDHELPER_CLASS
 
-#include "../MidiHelper/midihelper.hpp"
-#include "../Utils/utils.hpp"
-#include <fstream>
-#include <signal.h>
-#include <filesystem>
 #include <unistd.h>
+
+#include "../MidiHelper/midi_helper.hpp"
+#include "../Utils/utils.hpp"
+#include "../ConfigHelper/config_helper.hpp"
 
 class CmdHelper {
 	public:
 		CmdHelper();
 		~CmdHelper();
 
-		void help();
-
 		// Generic methods
-		void Start();
-		void Stop();
-		void Status();
+		void start();
+		void stop();
+		void status();
+		void help();
 
 		// Device related methods
 		void deviceList();
@@ -28,16 +26,12 @@ class CmdHelper {
 		void deviceRemove();
 		void deviceHelp();
 	private:
-		const string pidFile = "/var/run/midicmd.pid";
 		MidiHelper *midiHelper;
-
-		int getPID();
-		void setPID(int);
+		ConfigHelper *configHelper;
 
 		void daemon();
 
 		bool isRunning();
-
 }; //CmdHelper
 
 #endif //CMDHELPER_CLASS
