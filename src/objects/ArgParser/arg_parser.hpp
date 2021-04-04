@@ -16,6 +16,8 @@ class ArgParser {
 
 		void parse_device(int, char**);
 		void parse_config(int, char**);
+		void parse_command(int, char**);
+		void parse_feedback(int, char**);
 }; //ArgParser
 
 #endif //ARGPARSER_CLASS

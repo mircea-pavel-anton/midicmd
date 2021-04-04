@@ -9,6 +9,8 @@ void ArgParser::parse(int argc, char **argv) {
 
 	if (command.compare("device") == 0) return parse_device(argc, argv);
 	if (command.compare("config") == 0) return parse_config(argc, argv);
+	if (command.compare("command") == 0) return parse_command(argc, argv);
+	if (command.compare("feedback") == 0) return parse_feedback(argc, argv);
 
 	if (command.compare("start") == 0) return cmdHelper->start();
 	if (command.compare("stop") == 0) return cmdHelper->stop();
@@ -31,8 +33,13 @@ void ArgParser::parse_device(int argc, char **argv) {
 	std::string command = argv[2];
 
 	if (command.compare("ls") == 0) return cmdHelper->deviceList();
+	if (command.compare("list") == 0) return cmdHelper->deviceList();
+
 	if (command.compare("ps") == 0) return cmdHelper->deviceStatus();
+	if (command.compare("status") == 0) return cmdHelper->deviceStatus();
+
 	if (command.compare("rm") == 0) return cmdHelper->deviceRemove();
+	if (command.compare("remove") == 0) return cmdHelper->deviceRemove();
 
 	if (command.compare("set") == 0) {
 		if (argc == 4) { // midicmd device set X
@@ -64,29 +71,59 @@ void ArgParser::parse_config(int argc, char **argv) {
 	}
 	std::string command = argv[2];
 
-	if (command.compare("ls") == 0) {
-		std::cout << "Show config contents" << std::endl; //TODO
-		return;
-	}
-	if (command.compare("rm") == 0) {
-		std::cout << "Delete config contents" << std::endl; //TODO
-		return;
-	}
+	if (command.compare("init") == 0) return cmdHelper->configInit();
 
-	if (command.compare("init") == 0) {
-		std::cout << "Created config file" << std::endl; //TODO
-		return;
-	}
+	if (command.compare("status") == 0) return cmdHelper->configCheck();
+	if (command.compare("ps") == 0) return cmdHelper->configCheck();
 
-	if (command.compare("reset") == 0) {
-		std::cout << "Config file reset" << std::endl; //TODO
-		return;
-	}
+	if (command.compare("reset") == 0) return cmdHelper->configReset();
 
-	if (command.compare("help") == 0) {
-		std::cout << "config help" << std::endl; //TODO
+	if (command.compare("help") == 0) return cmdHelper->configHelp();
+
+	// if we got this far, then argv[1] was an unknown command
+	std::cout << toRed("Unknown command!") << std::endl;
+	std::cout << "Run " << toYellow("midicmd config help") << " for more details.";
+	std::cout << std::endl;
+}
+
+void ArgParser::parse_command(int argc, char **argv) {
+	if (argc < 3) {
+		std::cout << toRed("Insufficient parmeters!") << std::endl;
 		return;
 	}
+	std::string command = argv[2];
+
+	if (command.compare("add") == 0) return cmdHelper->commandAdd();
+
+	if (command.compare("ls") == 0) return cmdHelper->commandList();
+	if (command.compare("list") == 0) return cmdHelper->commandList();
+
+	if (command.compare("rm") == 0) return cmdHelper->commandRemove();
+	if (command.compare("remove") == 0) return cmdHelper->commandRemove();
+
+	if (command.compare("help") == 0) return cmdHelper->commandHelp();
+
+	// if we got this far, then argv[1] was an unknown command
+	std::cout << toRed("Unknown command!") << std::endl;
+	std::cout << "Run " << toYellow("midicmd config help") << " for more details.";
+	std::cout << std::endl;
+}
+
+void ArgParser::parse_feedback(int argc, char **argv) {
+	if (argc < 3) {
+		std::cout << toRed("Insufficient parmeters!") << std::endl;
+		return;
+	}
+	std::string command = argv[2];
+
+	if (command.compare("enable") == 0) return cmdHelper->feedbackEnable();
+
+	if (command.compare("disable") == 0) return cmdHelper->feedbackDisable();
+
+	if (command.compare("ps") == 0) return cmdHelper->feedbackStatus();
+	if (command.compare("status") == 0) return cmdHelper->feedbackStatus();
+
+	if (command.compare("help") == 0) return cmdHelper->feedbackHelp();
 
 	// if we got this far, then argv[1] was an unknown command
 	std::cout << toRed("Unknown command!") << std::endl;
