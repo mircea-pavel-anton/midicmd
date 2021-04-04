@@ -32,9 +32,9 @@ class CmdHelper {
 		// Config related methods
 		void configInit();
 		void configReset();
-		bool configCheck();
+		void configCheck();
 		void configHelp();
-
+		
 		// Feedback related methods
 		void feedbackEnable();
 		void feedbackDisable();
@@ -46,6 +46,7 @@ class CmdHelper {
 		ConfigHelper *configHelper;
 
 		bool isRunning();
+		inline bool isConfigOk() { return configHelper->getDevice() != -1; }
 }; //CmdHelper
 
 #endif //CMDHELPER_CLASS

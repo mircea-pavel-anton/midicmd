@@ -6,7 +6,8 @@ void CmdHelper::start() {
 		return;
 	}
 
-	if (configCheck() == false) { return; }
+	configCheck();
+	if (!isConfigOk()) exit(1);
 
 	system("systemctl start midicmd.service");
 

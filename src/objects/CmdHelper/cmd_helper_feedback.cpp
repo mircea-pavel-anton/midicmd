@@ -1,7 +1,8 @@
 #include "cmd_helper.hpp"
 
+
 void CmdHelper::feedbackStatus() {
-	if (configCheck() == false) return;
+	if (!isConfigOk()) return;
 
 	std::cout << "MiDi feedback is currently ";
 	if (configHelper->isFeedbackEnabled()) {
@@ -12,7 +13,7 @@ void CmdHelper::feedbackStatus() {
 }
 
 void CmdHelper::feedbackEnable() {
-	if (configCheck() == false) return;
+	if (!isConfigOk()) return;
 
 	if (configHelper->isFeedbackEnabled()) {
 		std::cout << toYellow("MiDi feedback is already enabled!") << std::endl;
@@ -23,7 +24,7 @@ void CmdHelper::feedbackEnable() {
 
 }
 void CmdHelper::feedbackDisable() {
-	if (configCheck() == false) return;
+	if (!isConfigOk()) return;
 
 	if (configHelper->isFeedbackEnabled()) {
 		configHelper->setFeedback(false);

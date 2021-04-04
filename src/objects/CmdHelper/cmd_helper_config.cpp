@@ -41,17 +41,15 @@ void CmdHelper::configReset() {
 	}
 }
 
-bool CmdHelper::configCheck() {
-	if (configHelper->getDevice() == -1) {
+void CmdHelper::configCheck() {
+	if (!isConfigOk()) {
 		std::cout << toRed("Failed to parse config file!") << std::endl;
 		std::cout << "If no modifications have been made to the config file, run " << toYellow("midicmd config init");
 		std::cout << " to create a default file, and then customize it." << std::endl;
 		std::cout << "Run " << toYellow("midicmd config help") << " for more details on config file customizations";
 		std::cout << std::endl;
-		return false;
 	} else {
 		std::cout << "Config file status: " << toGreen("OK") << std::endl;
-		return true;
 	}
 }
 
