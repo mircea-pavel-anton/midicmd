@@ -34,7 +34,13 @@ class CmdHelper {
 		void configReset();
 		void configCheck();
 		void configHelp();
-		
+
+		// Command related methods
+		void commandAdd();
+		void commandRemove();
+		void commandList();
+		void commandHelp();
+
 		// Feedback related methods
 		void feedbackEnable();
 		void feedbackDisable();
