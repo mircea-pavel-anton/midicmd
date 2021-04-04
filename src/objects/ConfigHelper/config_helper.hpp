@@ -5,6 +5,7 @@
 #include <filesystem>
 #include <string>
 #include <map>
+#include <iostream>
 
 #include "../Config/config.hpp"
 
@@ -25,7 +26,7 @@ class ConfigHelper {
 		void setCommands(std::map<int, const char*>);
 	private:
 		Config cache;
-		std::string filePath = "/etc/midicmd/config.txt";
+		std::string filePath = "/etc/midicmd.conf";
 
 		void cacheFileContents();
 };
