@@ -19,7 +19,7 @@ void DeviceHelper::set() {
 		std::cout << std::endl;
 		return;
 	}
-	
+
 	list();
 
 	int device_count = midiHelper->getInputPortCount();
@@ -50,14 +50,6 @@ void DeviceHelper::set(int port_id) {
 }
 
 void DeviceHelper::status() {
-	if (configHelper->checkFile() == false) {
-		std::cout << toRed("Failed to parse config file!") << std::endl;
-		std::cout << "If this is the first time you run this program, run " << toYellow("midicmd init");
-		std::cout << " to go through the setup wizard." << std::endl;
-		std::cout << std::endl;
-		return;
-	}
-
 	std::string device_name = configHelper->getDevice();
 
 	if (midiHelper->deviceExists(device_name)) {
