@@ -21,14 +21,6 @@ class CmdHelper {
 
 		void run();
 
-		// Device related methods
-		void deviceList();
-		void deviceSet();
-		void deviceSet(int);
-		void deviceStatus();
-		void deviceRemove();
-		void deviceHelp();
-
 		// Config related methods
 		void configInit();
 		void configReset();
