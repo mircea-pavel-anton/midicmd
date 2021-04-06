@@ -60,4 +60,25 @@ inline bool isRoot() {
 	return geteuid() == 0;
 };
 
+int prompt_for_input(std::string text, int min, int max) {
+	std::string user_input = "";
+	int value = 0;
+	bool is_value_ok = false;
+
+	do {
+		std::cout << text;
+		std::cin >> user_input;
+
+		try {
+			value = std::stoi(user_input);
+			is_value_ok = (value <= max && value >= min);
+		} catch (std::invalid_argument &err){
+			std::cout << toRed("Invalid argument!") << std::endl;
+			is_value_ok = false;
+		}
+	} while (is_value_ok == false);
+
+	return value;
+}
+
 #endif //UTILS_HEADER
