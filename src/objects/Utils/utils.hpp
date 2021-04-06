@@ -53,4 +53,11 @@ inline std::string toBold(std::string str) {
 	return Colors::Modifiers::Bright + str + Colors::Modifiers::Reset;
 }
 
+
+inline bool isRoot() {
+	std::cout << "UID: " << getuid() << std::endl;
+	std::cout << "EUID: " << geteuid() << std::endl;
+	return geteuid() == 0;
+};
+
 #endif //UTILS_HEADER
