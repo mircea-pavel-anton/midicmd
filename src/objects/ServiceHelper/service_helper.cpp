@@ -73,7 +73,11 @@ void ServiceHelper::status() {
 }
 
 void ServiceHelper::init() {
-	// TODO
+	// TODO create service file
+	// TODO create config file
+	// TODO call DeviceHelper->set();
+	// TODO prompt the user to enable/disable midi feedback
+	// TODO run CommandHelper()->add(); in a do{}while loop to keep adding commands
 }
 
 void ServiceHelper::run() {
