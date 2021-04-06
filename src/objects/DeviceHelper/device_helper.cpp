@@ -1,5 +1,13 @@
 #include "device_helper.hpp"
 
+DeviceHelper::DeviceHelper(MidiHelper *midi, ConfigHelper *config) {
+	midiHelper = midi;
+	configHelper = config;
+}
+DeviceHelper::~DeviceHelper() {
+	delete midiHelper;
+	delete configHelper;
+}
 
 void DeviceHelper::list() {
 	std::vector<std::string> devices = midiHelper->getInputDevices();
