@@ -13,14 +13,6 @@ class CmdHelper {
 		CmdHelper();
 		~CmdHelper();
 
-		// Generic methods
-		void start();
-		void stop();
-		void status();
-		void help();
-
-		void run();
-
 		// Config related methods
 		void configInit();
 		void configReset();
