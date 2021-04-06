@@ -32,13 +32,6 @@ class CmdHelper {
 		void commandRemove();
 		void commandList();
 		void commandHelp();
-
-		// Feedback related methods
-		void feedbackEnable();
-		void feedbackDisable();
-		void feedbackStatus();
-		void feedbackHelp();
-
 	private:
 		MidiHelper *midiHelper;
 		ConfigHelper *configHelper;
