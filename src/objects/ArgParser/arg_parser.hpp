@@ -1,7 +1,6 @@
 #ifndef ARGPARSER_CLASS
 #define ARGPARSER_CLASS
 
-#include "../Utils/utils.hpp"
 #include "../ServiceHelper/service_helper.hpp"
 #include "../DeviceHelper/device_helper.hpp"
 #include "../FeedbackHelper/feedback_helper.hpp"
