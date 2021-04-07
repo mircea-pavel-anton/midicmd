@@ -81,8 +81,15 @@ void ServiceHelper::init() {
 }
 
 void ServiceHelper::run() {
-	midiHelper->setInputDevice(configHelper->getDevice());
-	bool feedback = configHelper->isFeedbackEnabled();
+	int device_port = midiHelper->getInputDeviceId( configHelper->getDevice() );
+
+	if (device_port == -1) {
+		std::cout << toRed("No input device set!");
+		return;
+	}
+
+	midiHelper->setInputDevice(device_port);
+	bool feedback = configHelper->getFeedback();
 
 	std::map<int, const char*> commands = configHelper->getCommands();
 	std::map<int, const char*>::iterator iter;
