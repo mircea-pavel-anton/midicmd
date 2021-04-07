@@ -4,10 +4,7 @@ CommandHelper::CommandHelper(MidiHelper *midi, ConfigHelper *config) {
 	midiHelper = midi;
 	configHelper = config;
 }
-CommandHelper::~CommandHelper() {
-	delete midiHelper;
-	delete configHelper;
-}
+CommandHelper::~CommandHelper() { /* we don't delete here, but in ArgParser */ }
 
 void CommandHelper::add() {
 	//TODO

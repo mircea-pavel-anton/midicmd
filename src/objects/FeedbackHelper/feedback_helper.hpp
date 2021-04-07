@@ -6,8 +6,8 @@
 
 class FeedbackHelper{
 	public:
-		FeedbackHelper(ConfigHelper *helper) { configHelper = helper; }
-		~FeedbackHelper() { delete configHelper; };
+		FeedbackHelper(ConfigHelper *helper);
+		~FeedbackHelper();
 
 		void enable();
 		void disable();

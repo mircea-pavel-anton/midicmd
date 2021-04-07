@@ -1,5 +1,7 @@
 #include "feedback_helper.hpp"
 
+FeedbackHelper::FeedbackHelper(ConfigHelper *config) { configHelper = config; }
+FeedbackHelper::~FeedbackHelper() { /* we don't delete here, but in ArgParser */ }
 
 void FeedbackHelper::enable() {
 	if (!isRoot()) {

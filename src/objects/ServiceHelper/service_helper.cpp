@@ -1,5 +1,12 @@
 #include "service_helper.hpp"
 
+ServiceHelper::ServiceHelper(MidiHelper *midi, ConfigHelper *config) {
+	midiHelper = midi;
+	configHelper = config;
+}
+ServiceHelper::~ServiceHelper() { /* we don't delete here, but in ArgParser */ }
+
+
 bool ServiceHelper::isRunning() {
 	const char *command = "systemctl status midicmd | grep running | wc -l";
 	std::array<char, 128> buffer;

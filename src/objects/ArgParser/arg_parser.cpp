@@ -3,19 +3,19 @@
 ArgParser::ArgParser() {
 	midiHelper = new MidiHelper();
 
-	serviceHelper = new ServiceHelper();
 	configHelper = new ConfigHelper();
-	deviceHelper = new DeviceHelper(midiHelper, configHelper);
 	feedbackHelper = new FeedbackHelper(configHelper);
+	serviceHelper = new ServiceHelper(midiHelper, configHelper);
+	deviceHelper = new DeviceHelper(midiHelper, configHelper);
 	commandHelper = new CommandHelper(midiHelper, configHelper);
 }
 
 ArgParser::~ArgParser() {
-	delete serviceHelper;
-	delete midiHelper;
-	delete deviceHelper;
-	delete feedbackHelper;
-	delete configHelper;
+	if (serviceHelper != nullptr) delete serviceHelper;
+	if (midiHelper != nullptr) delete midiHelper;
+	if (deviceHelper != nullptr) delete deviceHelper;
+	if (feedbackHelper != nullptr) delete feedbackHelper;
+	if (configHelper != nullptr) delete configHelper;
 }
 
 

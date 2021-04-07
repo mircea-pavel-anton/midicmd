@@ -11,6 +11,9 @@
 
 class ServiceHelper {
 	public:
+		ServiceHelper(MidiHelper*, ConfigHelper*);
+		~ServiceHelper();
+
 		void start();
 		void stop();
 		void status();

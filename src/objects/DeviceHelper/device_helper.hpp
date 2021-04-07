@@ -7,12 +7,8 @@
 
 class DeviceHelper {
 	public:
-		DeviceHelper(MidiHelper *midi, ConfigHelper *config) :
-			midiHelper(midi), configHelper(config) {};
-		~DeviceHelper() {
-			delete midiHelper;
-			delete configHelper;
-		}
+		DeviceHelper(MidiHelper *midi, ConfigHelper *config);
+		~DeviceHelper();
 
 		void list();
 		void set();
