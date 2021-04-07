@@ -4,10 +4,7 @@ DeviceHelper::DeviceHelper(MidiHelper *midi, ConfigHelper *config) {
 	midiHelper = midi;
 	configHelper = config;
 }
-DeviceHelper::~DeviceHelper() {
-	delete midiHelper;
-	delete configHelper;
-}
+DeviceHelper::~DeviceHelper() { /* we don't delete here, but in ArgParser */ }
 
 void DeviceHelper::list() {
 	std::vector<std::string> devices = midiHelper->getInputDevices();
@@ -31,13 +28,24 @@ void DeviceHelper::set() {
 	list();
 
 	int device_count = midiHelper->getInputPortCount();
-	int port_id = prompt_for_input(
-		"Choose your device [0-" + std::to_string(device_count) + "]:",
-		0,
-		device_count - 1
-	);
+	std::string user_input = "";
+	int value = 0;
+	bool is_value_ok = false;
 
-	set(port_id);
+	do {
+		std::cout << "Enter the id of the desired device [0-" + std::to_string(device_count - 1) + "]: ";
+		std::cin >> user_input;
+
+		try {
+			value = std::stoi(user_input);
+			is_value_ok = (value >= 0 && value < device_count);
+		} catch (std::invalid_argument &err){
+			std::cout << toRed("Invalid argument!") << std::endl;
+			is_value_ok = false;
+		}
+	} while (is_value_ok == false);
+
+	set(value);
 }
 
 void DeviceHelper::set(int port_id) {
