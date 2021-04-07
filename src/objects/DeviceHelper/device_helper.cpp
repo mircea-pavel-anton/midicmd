@@ -48,8 +48,8 @@ void DeviceHelper::set(int port_id) {
 	}
 
 	try {
-		midiHelper->setInputDevice(port_id);
-		configHelper->setDevice(port_id);
+		std::string device_name = midiHelper->setInputDevice(port_id);
+		configHelper->setDevice(device_name);
 		std::cout << toGreen("Device changed!") << std::endl;
 	} catch(std::range_error &err) {
 		std::cout << toRed("Failed to set device. Index out of range!");
@@ -60,7 +60,7 @@ void DeviceHelper::set(int port_id) {
 void DeviceHelper::status() {
 	std::string device_name = configHelper->getDevice();
 
-	if (midiHelper->deviceExists(device_name)) {
+	if (midiHelper->getInputDeviceId(device_name) != -1) {
 		std::cout << "Currently listenting to: ";
 		std::cout << toYellow(device_name);
 		std::cout << std::endl;
@@ -69,8 +69,8 @@ void DeviceHelper::status() {
 		return;
 	}
 
-	if (configHelper->isFeedbackEnabled()) {
-		if (midiHelper->outputDevice.isSet()) {
+	if (configHelper->getFeedback()) {
+		if (midiHelper->getOutputDeviceId(device_name) != -1) {
 			std::cout << "Currently talking to: ";
 			std::cout << toYellow(device_name);
 			std::cout << std::endl;
