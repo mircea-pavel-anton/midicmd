@@ -1,11 +1,13 @@
 #include "config_helper.hpp"
 
+//* Config File I/O *//
 void ConfigHelper::cacheFileContents() {
 	std::ifstream file(filePath);
+	std::string aux = "";
 
 	// First line should be the device id
-	file >> cache.device;
-	file >> cache.feedback;
+	file >> aux >> cache.device;
+	file >> aux >> cache.feedback;
 
 	int key = 0;;
 	std::string value = "";
@@ -20,8 +22,8 @@ void ConfigHelper::cacheFileContents() {
 
 void ConfigHelper::write(Config &config) {
 	std::ofstream file(filePath);
-	file << config.device << std::endl;
-	file << config.feedback << std::endl;
+	file << "device: "   << config.device << std::endl;
+	file << "feedback: " << config.feedback << std::endl;
 
 	std::map<int, const char*>::iterator it = config.commands.begin();
 	for (it; it != config.commands.end(); ++it) {
@@ -32,14 +34,16 @@ void ConfigHelper::write(Config &config) {
 }
 
 bool ConfigHelper::checkFile() {
-	int device = getDevice();
-	if (device == -1) return false;
+	std::string device = getDevice();
+	if (device.compare("None")) return false;
 	std::map<int, const char*> commands = getCommands();
 	if (commands.empty()) return false;
 	return true;
 }
 
-int ConfigHelper::getDevice() {
+
+//* GETTERS *//
+std::string ConfigHelper::getDevice() {
 	if (cache.isSet == false) cacheFileContents();
 	return cache.device;
 }
@@ -49,12 +53,14 @@ std::map<int, const char*> ConfigHelper::getCommands() {
 	return cache.commands;
 }
 
-bool ConfigHelper::isFeedbackEnabled() {
+bool ConfigHelper::getFeedback() {
 	if (cache.isSet == false) cacheFileContents();
 	return cache.feedback;
 }
 
-void ConfigHelper::setDevice(int device) {
+
+//* SETTERS *//
+void ConfigHelper::setDevice(std::string device) {
 	if (cache.isSet == false) cacheFileContents();
 	cache.device = device;
 	write(cache);

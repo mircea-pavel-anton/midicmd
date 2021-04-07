@@ -17,11 +17,11 @@ class ConfigHelper {
 		void write(Config&);
 		bool checkFile();
 
-		int getDevice();
-		bool isFeedbackEnabled();
+		std::string getDevice();
+		bool getFeedback();
 		std::map<int, const char *> getCommands();
 
-		void setDevice(int);
+		void setDevice(std::string);
 		void setFeedback(bool);
 		void setCommands(std::map<int, const char*>);
 	private:
