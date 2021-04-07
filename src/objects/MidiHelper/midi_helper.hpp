@@ -2,34 +2,34 @@
 #define MIDIHELPER_CLASS
 
 #include "../../../lib/RtMidi.hpp"
-#include "../MidiDevice/midi_device.hpp"
 #include "../Utils/utils.hpp"
 #include "../MidiEvent/midi_event.hpp"
 
 class MidiHelper {
 	public:
-		MidiDevice inputDevice, outputDevice;
-
 		MidiHelper();
 		~MidiHelper();
 
-		std::vector<std::string> getInputDevices();
-		std::vector<std::string> getOutputDevices();
-		int getInputPortCount();
 		MidiEvent getMessage();
 
-		void setInputDevice(int);
+		std::vector<std::string> getInputDevices();
+		std::vector<std::string> getOutputDevices();
+
+		int getInputPortCount();
+		int getOutputPortCount();
+
+		std::string setInputDevice(int);
 		void setOutputDevice(int);
 
-
-		void clearDevice();
-
+		int getInputDeviceId(std::string);
+		int getOutputDeviceId(std::string);
 	private:
 		RtMidiIn *midiIn;
 		RtMidiOut *midiOut;
 
+		int getDeviceId(RtMidi*, std::string);
+		void setDevice(RtMidi *, int&);
 		std::vector<std::string> getDevices(RtMidi *);
-		void setDevice(RtMidi *, int&, MidiDevice&);
 }; //MidiHelper
 
 #endif //MIDIHELPER_CLASS
