@@ -8,7 +8,7 @@ void FeedbackHelper::enable() {
 		return;
 	}
 
-	if (configHelper->isFeedbackEnabled()) {
+	if (configHelper->getFeedback()) {
 		std::cout << toYellow("MiDi feedback is already enabled!") << std::endl;
 	} else {
 		configHelper->setFeedback(true);
@@ -23,7 +23,7 @@ void FeedbackHelper::disable() {
 		return;
 	}
 
-	if (configHelper->isFeedbackEnabled()) {
+	if (configHelper->getFeedback()) {
 		configHelper->setFeedback(false);
 		std::cout << toGreen("MiDi feedback disabled!") << std::endl;
 	} else {
@@ -33,7 +33,7 @@ void FeedbackHelper::disable() {
 
 void FeedbackHelper::status() {
 	std::cout << "MiDi feedback is currently ";
-	if (configHelper->isFeedbackEnabled()) {
+	if (configHelper->getFeedback()) {
 		std::cout << toGreen("enabled") << std::endl;
 	} else {
 		std::cout << toRed("disabled") << std::endl;
