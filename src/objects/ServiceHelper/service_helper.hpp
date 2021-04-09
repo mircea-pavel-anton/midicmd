@@ -17,10 +17,13 @@ class ServiceHelper {
 		void start();
 		void stop();
 		void status();
+
+		void enable();
+		void disable();
+
 		void init();
 		void run();
 		void help();
-
 	private:
 		MidiHelper *midiHelper;
 		ConfigHelper *configHelper;

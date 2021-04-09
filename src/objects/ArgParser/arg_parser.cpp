@@ -32,6 +32,8 @@ void ArgParser::parse(int argc, char **argv) {
 
 	if (command.compare("start") == 0) return serviceHelper->start();
 	if (command.compare("stop") == 0) return serviceHelper->stop();
+	if (command.compare("enable") == 0) return serviceHelper->enable();
+	if (command.compare("disable") == 0) return serviceHelper->disable();
 	if (command.compare("status") == 0) return serviceHelper->status();
 	if (command.compare("run") == 0) return serviceHelper->run();
 

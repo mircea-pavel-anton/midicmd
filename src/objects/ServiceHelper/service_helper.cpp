@@ -64,6 +64,42 @@ void ServiceHelper::stop() {
 	}
 }
 
+void ServiceHelper::enable() {
+	if (!isRoot()) {
+		std::cout << toRed("This command required sudo privileges!") << std::endl;
+		std::cout << "Try again with " << toYellow("sudo midicmd enable") << std::endl;
+		return;
+	}
+
+	int rc = system("systemctl enable midicmd.service");
+	if (rc != 0) {
+		std::cout << toRed("Failed to enable the service!") << std::endl;
+		exit(1);
+	} else {
+		std::cout << toYellow("Service enabled!") << std::endl;
+		std::cout << "Next time you boot your system, midicmd will already be running!" << std::endl;
+		std::cout << "To start the daemon now, run: " << toYellow("sudo midicmd start") << std::endl;
+	}
+}
+
+void ServiceHelper::enable() {
+	if (!isRoot()) {
+		std::cout << toRed("This command required sudo privileges!") << std::endl;
+		std::cout << "Try again with " << toYellow("sudo midicmd disable") << std::endl;
+		return;
+	}
+
+	int rc = system("systemctl disable midicmd.service");
+	if (rc != 0) {
+		std::cout << toRed("Failed to disable the service!") << std::endl;
+		exit(1);
+	} else {
+		std::cout << toYellow("Service disable!") << std::endl;
+		std::cout << "Next time you boot your system, midicmd will not be running!" << std::endl;
+		std::cout << "To stop the daemon now, run: " << toYellow("sudo midicmd stop") << std::endl;
+	}
+}
+
 void ServiceHelper::status() {
 	if (!isRoot()) {
 		std::cout << toRed("This command required sudo privileges!") << std::endl;
