@@ -82,7 +82,7 @@ void ServiceHelper::enable() {
 	}
 }
 
-void ServiceHelper::enable() {
+void ServiceHelper::disable() {
 	if (!isRoot()) {
 		std::cout << toRed("This command required sudo privileges!") << std::endl;
 		std::cout << "Try again with " << toYellow("sudo midicmd disable") << std::endl;
