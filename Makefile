@@ -1,3 +1,8 @@
+MAIN = src/main.cpp
+OBJECTS = src/objects/*/*.cpp
+LIB = lib/RtMidi.cpp
+FLAGS = -D__LINUX_ALSA__ -lasound -lpthread
+BINARY = midicmd.out
 
 all: build execute clean
 
@@ -5,14 +10,25 @@ build: compile link
 
 compile:
 	@ mkdir build -p
-	@ cd build && g++ -std=c++17 -c ../src/main.cpp ../src/objects/*/*.cpp ../lib/RtMidi.cpp -D__LINUX_ALSA__ -lasound -lpthread
+	@ printf "Compiling libraries... "
+	@ cd build && g++ -c ../$(LIB) $(FLAGS)
+	@ echo "Done"
+	@ printf "Compiling source code..."
+	@ cd build && g++ -std=c++17 -c ../$(MAIN) ../$(OBJECTS) $(FLAGS)
+	@ echo "Done"
 
 link:
-	@ g++ ./build/* -o midicmd
+	@ printf "Linking..."
+	@ g++ ./build/* -o $(BINARY) $(FLAGS)
+	@ echo "Done"
 
 execute:
-	@ ./midicmd help
+	@ $(BINARY) help
 
 clean:
+	@ printf "Removing build dir..."
 	@ rm -rf build
-	@ rm midicmd
+	@ echo "Done"
+	@ printf "Removing binary..."
+	@ rm $(BINARY)
+	@ echo "Done"
