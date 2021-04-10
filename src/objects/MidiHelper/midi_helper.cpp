@@ -70,7 +70,7 @@ std::string MidiHelper::setInputDevice(int port_id) {
 }
 
 void MidiHelper::setDevice(RtMidi *midi, int &port_id) {
-	if (port_id > midi->getPortCount()) {
+	if (port_id >= midi->getPortCount() || port_id < 0) {
 		throw std::range_error("Port number out of range!");
 	}
 	midi->openPort(port_id);
