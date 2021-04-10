@@ -23,6 +23,12 @@ void CommandHelper::list() {
 }
 
 void CommandHelper::remove() {
+	if (!isRoot()) {
+		std::cout << toRed("Removing a command requires sudo privileges in order to edit the config file!");
+		std::cout << std::endl;
+		return;
+	}
+
 	list();
 
 	std::map<int, const char*> commands = configHelper->getCommands();
@@ -32,19 +38,26 @@ void CommandHelper::remove() {
 
 	std::cout << std::endl;
 	do {
-		std::cout << "Which event ID do you want to remove?";
+		std::cout << "Enter the event ID of the command you want to remove: ";
 		std::cin >> user_input;
 		try {
 			value = std::stoi(user_input);
 			is_value_ok = (commands.find(value) != commands.end());
+			if (!is_value_ok) {
+				std::cout << toRed("Invalid value!") << std::endl;
+			}
 		} catch (std::invalid_argument &err) {
 			std::cout << toRed("Invalid argument!") << std::endl;
 			is_value_ok = false;
 		}
 	} while (!is_value_ok);
 
-	commands.erase(value);
-	configHelper->setCommands(commands);
+	if (commands.erase(value) == 1) {
+		configHelper->setCommands(commands);
+		std::cout << toGreen("Command removed!") << std::endl;
+	} else {
+		std::cout << toRed("Failed to remove command!") << std::endl;
+	}
 }
 
 void CommandHelper::help() {
