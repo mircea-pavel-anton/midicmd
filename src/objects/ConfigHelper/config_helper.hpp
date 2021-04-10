@@ -3,9 +3,8 @@
 
 #include <fstream>
 #include <filesystem>
-#include <string>
-#include <map>
 #include <iostream>
+#include <bits/stdc++.h>
 
 #include "../Config/config.hpp"
 
