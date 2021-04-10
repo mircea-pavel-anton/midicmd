@@ -12,8 +12,7 @@ void ConfigHelper::cacheFileContents() {
 			line = line.substr(10);
 			transform(line.begin(), line.end(), line.begin(), ::toupper);
 			cache.feedback = (line == "TRUE" || line == "YES");
-		}
-		else if (line.find("commands:") != std::string::npos) {
+		} else if (line.find("commands:") != std::string::npos) {
 			std::streampos old_position = file.tellg();
 			bool is_in_command_section = true;
 
@@ -23,10 +22,13 @@ void ConfigHelper::cacheFileContents() {
 					std::size_t pos = line.find(":");
 
 					if (pos != std::string::npos) {
-						std::string copy(line.c_str());
-						int key = std::atoi(copy.substr(4, pos-4).c_str());
-						const char *value = copy.substr(pos+2).c_str();
-						std::cout << "Add " << value << " at " << key << std::endl;
+						std::string aux = line.substr(4, pos-4);
+						int key = std::atoi(aux.c_str());
+
+						aux = line.substr(pos+2).c_str();
+						char *value = new char[aux.length()];
+						strcpy(value, aux.c_str());
+						
 						cache.commands.insert( std::pair<int, const char*>(key, value) );
 					} else {
 						throw std::runtime_error("Invalid format in config file");
@@ -39,19 +41,6 @@ void ConfigHelper::cacheFileContents() {
 			}
 		}
 	}
-
-	std::cout << "Device: " << cache.device << std::endl;
-	std::cout << "Feedback: " << cache.feedback << std::endl;
-
-	// TODO: this is broken...
-	// Why is this broken?
-	// This should work. It makes no sense :)
-	// It prints them right in the while loop above. why is it wrong here?
-	// FIXME
-	for (auto const &[key, val] : cache.commands) {
-		std::cout << "  - " << key << ": " << val << std::endl;
-	}
-	std::cout << std::endl;
 
 	cache.isSet = true;
 	file.close();
@@ -66,8 +55,8 @@ void ConfigHelper::write(Config &config) {
 	else file << "False" << std::endl;
 
 	file << "commands:" << std::endl;
-	for (auto const &[key, value] : cache.commands) {
-		file << "  - " << key << ": " << value << std::endl;
+	for (auto it = cache.commands.begin(); it != cache.commands.end(); it++) {
+		file << "  - " << it->first << ": " << it->second << std::endl;
 	}
 
 	file.close();
@@ -75,7 +64,7 @@ void ConfigHelper::write(Config &config) {
 
 bool ConfigHelper::checkFile() {
 	std::string device = getDevice();
-	if (device.compare("None")) return false;
+	if (device.compare("None") == 0) return false;
 	std::map<int, const char*> commands = getCommands();
 	if (commands.empty()) return false;
 	return true;
