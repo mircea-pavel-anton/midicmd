@@ -13,12 +13,15 @@ void CommandHelper::add() {
 void CommandHelper::list() {
 	std::map<int, const char*> commands = configHelper->getCommands();
 
-	std::map<int, const char*>::iterator it = commands.begin();
+	if (commands.size() == 0) {
+		std::cout << toRed("There are no commands in the config file!") << std::endl;
+		std::cout << "You can add some with: " << toYellow("sudo midicmd command add") << std::endl;
+		return;
+	}
 
 	std::cout << toYellow("There are " + std::to_string(commands.size()) + " commands in the config file");
 	std::cout << std::endl;
-
-	for (it; it != commands.end(); ++it) {
+	for (auto it = commands.begin(); it != commands.end(); it++) {
 		std::cout << it->first << ": " << it->second << std::endl;
 	}
 }
