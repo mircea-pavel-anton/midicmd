@@ -12,6 +12,7 @@ void CommandHelper::add() {
 
 void CommandHelper::list() {
 	std::map<int, const char*> commands = configHelper->getCommands();
+
 	std::map<int, const char*>::iterator it = commands.begin();
 
 	std::cout << toYellow("There are " + std::to_string(commands.size()) + " commands in the config file");
@@ -29,9 +30,14 @@ void CommandHelper::remove() {
 		return;
 	}
 
+	std::map<int, const char*> commands = configHelper->getCommands();
+	if (commands.size() == 0) {
+		std::cout << toYellow("There are no commands configured.") << std::endl;
+		std::cout << toYellow("There is nothing to delete.") << std::endl;
+		return;
+	}
 	list();
 
-	std::map<int, const char*> commands = configHelper->getCommands();
 	int value = 0;
 	bool is_value_ok = false;
 	std::string user_input = "";
