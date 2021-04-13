@@ -5,9 +5,9 @@ ArgParser::ArgParser() {
 
 	configHelper = new ConfigHelper();
 	feedbackHelper = new FeedbackHelper(configHelper);
-	serviceHelper = new ServiceHelper(midiHelper, configHelper);
 	deviceHelper = new DeviceHelper(midiHelper, configHelper);
 	commandHelper = new CommandHelper(midiHelper, configHelper);
+	serviceHelper = new ServiceHelper(midiHelper, configHelper, deviceHelper, feedbackHelper, commandHelper);
 }
 
 ArgParser::~ArgParser() {
@@ -30,6 +30,7 @@ void ArgParser::parse(int argc, char **argv) {
 	if (command.compare("command") == 0) return parse_command(argc, argv);
 	if (command.compare("feedback") == 0) return parse_feedback(argc, argv);
 
+	if (command.compare("init") == 0) return serviceHelper->init();
 	if (command.compare("start") == 0) return serviceHelper->start();
 	if (command.compare("stop") == 0) return serviceHelper->stop();
 	if (command.compare("enable") == 0) return serviceHelper->enable();

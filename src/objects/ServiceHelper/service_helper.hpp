@@ -6,14 +6,17 @@
 
 #include "../MidiEvent/midi_event.hpp"
 #include "../MidiHelper/midi_helper.hpp"
+#include "../DeviceHelper/device_helper.hpp"
 #include "../ConfigHelper/config_helper.hpp"
+#include "../FeedbackHelper/feedback_helper.hpp"
+#include "../CommandHelper/command_helper.hpp"
 #include "../Utils/utils.hpp"
 
 extern bool is_running;
 
 class ServiceHelper {
 	public:
-		ServiceHelper(MidiHelper*, ConfigHelper*);
+		ServiceHelper(MidiHelper*, ConfigHelper*, DeviceHelper*, FeedbackHelper*, CommandHelper*);
 		~ServiceHelper();
 
 		void start();
@@ -27,8 +30,12 @@ class ServiceHelper {
 		void run();
 		void help();
 	private:
+		std::string service_file_path = "/etc/systemd/system/midicmd.service";
 		MidiHelper *midiHelper;
 		ConfigHelper *configHelper;
+		DeviceHelper *deviceHelper;
+		FeedbackHelper *feedbackHelper;
+		CommandHelper *commandHelper;
 		bool isRunning();
 };
 
