@@ -137,6 +137,13 @@ void ServiceHelper::run() {
 	std::map<int, const char*> commands = configHelper->getCommands();
 	std::map<int, const char*>::iterator iter;
 	MidiEvent event;
+
+	if (configHelper->getFeedback()) {
+		for (iter = commands.begin(); iter != commands.end(); iter++) {
+			midiHelper->sendFeedback(MidiEvent(iter->first));
+		}
+	}
+
 	while (true) {
 		event = midiHelper->getMessage();
 
