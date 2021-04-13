@@ -38,12 +38,12 @@ void CommandHelper::add() {
 			status = getYesNo("Is this ok?");
 
 			if (status == true) {
-				if (commands.find(event.getCode()) != commands.end()) {
+				if (commands.find(event.getUID()) != commands.end()) {
 					std::cout << toYellow("A macro is already bound to this key!") << std::endl;
 					std::cout << "By continuing, you will OVERWRITE the existing macro." << std::endl;
 					status = getYesNo("Continue?");
 					
-					if (status) commands.erase(event.getCode());
+					if (status) commands.erase(event.getUID());
 				}
 			}
 
@@ -56,7 +56,7 @@ void CommandHelper::add() {
 		std::getline(std::cin, command);
 	} while(command.size() <= 0);
 
-	std::pair<int, const char*> entry = { event.getCode(), command.c_str() };
+	std::pair<int, const char*> entry = { event.getUID(), command.c_str() };
 	commands.emplace(entry);
 	configHelper->setCommands(commands);
 }

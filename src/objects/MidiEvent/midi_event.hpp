@@ -19,12 +19,12 @@ class MidiEvent {
 		int getNoteId() { return note; };
 		int getVelocity() { return velocity; };
 		double getTimestamp() { return timestamp; }
-		int getCode() { return code; };
+		int getUID() { return uid; };
 
-		bool isOk() { return timestamp != 0 && code != 0; };
+		bool isOk() { return timestamp != 0 && uid != 0; };
 	private:
 		double timestamp = 0;
-		int code = 0;
+		int uid = 0;
 		int note = 0;
 		int event = 0;
 		int channel = 0;

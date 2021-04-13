@@ -91,3 +91,8 @@ int MidiHelper::getDeviceId(RtMidi *midi, std::string device_name) {
 	}
 	return -1;
 }
+
+
+void MidiHelper::sendMessage(const MidiEvent &event) {
+	midiOut->sendMessage(event.getFeedbackMessage());
+}

@@ -11,6 +11,7 @@ class MidiHelper {
 		~MidiHelper();
 
 		MidiEvent getMessage();
+		void sendMessage(const MidiEvent&);
 
 		std::vector<std::string> getInputDevices();
 		std::vector<std::string> getOutputDevices();

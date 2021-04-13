@@ -3,14 +3,14 @@
 MidiEvent::MidiEvent(double _timestamp, std::vector<unsigned char> _code) {
 	if (_code.size() != 3) {
 		timestamp = 0;
-		code = 0;
+		uid = 0;
 		throw std::runtime_error("Invalid MiDi code!");
 	} else {
 		timestamp = _timestamp;
 
 		std::stringstream ss;
 		ss << (int)_code[0] << (int)_code[1] << (int)_code[2];
-		code = std::atoi(ss.str().c_str());
+		uid = std::atoi(ss.str().c_str());
 
 		event = _code[0] / 16 * 16;
 		channel = _code[0] % 16 + 1;

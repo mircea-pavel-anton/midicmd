@@ -141,7 +141,7 @@ void ServiceHelper::run() {
 		event = midiHelper->getMessage();
 
 		if (event.isOk()) {
-			iter = commands.find(event.getCode());
+			iter = commands.find(event.getUID());
 
 			if (iter != commands.end()) {
 				system(iter->second);
