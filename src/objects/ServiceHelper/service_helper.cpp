@@ -1,8 +1,11 @@
 #include "service_helper.hpp"
 
-ServiceHelper::ServiceHelper(MidiHelper *midi, ConfigHelper *config) {
+ServiceHelper::ServiceHelper(MidiHelper *midi, ConfigHelper *config, DeviceHelper *device, FeedbackHelper *feedback, CommandHelper *command) {
 	midiHelper = midi;
 	configHelper = config;
+	deviceHelper = device;
+	commandHelper = command;
+	feedbackHelper = feedback;
 }
 ServiceHelper::~ServiceHelper() { /* we don't delete here, but in ArgParser */ }
 
@@ -116,11 +119,33 @@ void ServiceHelper::status() {
 }
 
 void ServiceHelper::init() {
-	// TODO create service file
-	// TODO create config file
-	// TODO call DeviceHelper->set();
-	// TODO prompt the user to enable/disable midi feedback
-	// TODO run CommandHelper()->add(); in a do{}while loop to keep adding commands
+	if (!isRoot()) {
+		std::cout << toRed("This command required sudo privileges!") << std::endl;
+		std::cout << "Try again with " << toYellow("sudo midicmd init") << std::endl;
+		return;
+	}
+
+
+	std::ofstream file(service_file_path);
+	file << "[Unit]" << std::endl;
+	file << "Description=A translation layer that turns any midi device into a macro keyboard" << std::endl << std::endl;
+	file << "[Service]" << std::endl;
+	file << "User=root" << std::endl;
+	file << "WorkingDirectory=/root" << std::endl;
+	file << "ExecStart=/bin/midicmd" << std::endl;
+	file << "Restart=always" << std::endl;
+	file << "[Install]" << std::endl;
+	file << "WantedBy=multi-user.target" << std::endl;
+
+	deviceHelper->set();
+
+	bool feedback = getYesNo("Do you want to enable midi feedback for your device?");
+	if (feedback) feedbackHelper->enable();
+	else feedbackHelper->disable();
+
+	std::cout << "Now it's time to add your first command!" << std::endl;
+	commandHelper->add();
+	std::cout << "To add more commands, use " << toYellow("sudo midicmd commands add") << std::endl;
 }
 
 static void finish(int) { is_running = false; }
