@@ -59,3 +59,10 @@ std::vector<unsigned char> MidiEvent::getFeedback() const {
 	feedback_message[2] = 127;
 	return feedback_message;
 }
+std::vector<unsigned char> MidiEvent::getCancelFeedback() const {
+	std::vector<unsigned char> feedback_message = {0, 0, 0};
+	feedback_message[0] = event + channel;
+	feedback_message[1] = note;
+	feedback_message[2] = 0;
+	return feedback_message;
+}

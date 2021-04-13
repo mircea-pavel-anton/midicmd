@@ -9,6 +9,8 @@
 #include "../ConfigHelper/config_helper.hpp"
 #include "../Utils/utils.hpp"
 
+extern bool is_running;
+
 class ServiceHelper {
 	public:
 		ServiceHelper(MidiHelper*, ConfigHelper*);

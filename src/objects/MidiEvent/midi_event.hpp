@@ -22,6 +22,7 @@ class MidiEvent {
 		double getTimestamp() const { return timestamp; }
 		int getUID() const { return uid; };
 		std::vector<unsigned char> getFeedback() const;
+		std::vector<unsigned char> getCancelFeedback() const;
 		bool isOk() const { return timestamp != 0 && uid != 0; };
 	private:
 		double timestamp = 0;

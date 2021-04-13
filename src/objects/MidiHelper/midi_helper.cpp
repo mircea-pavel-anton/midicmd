@@ -97,3 +97,7 @@ void MidiHelper::sendFeedback(const MidiEvent &event) {
 	std::vector<unsigned char> msg = event.getFeedback();
 	midiOut->sendMessage(&msg);
 }
+void MidiHelper::cancelFeedback(const MidiEvent &event) {
+	std::vector<unsigned char> msg = event.getCancelFeedback();
+	midiOut->sendMessage(&msg);
+}

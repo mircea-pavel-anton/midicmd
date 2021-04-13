@@ -123,6 +123,8 @@ void ServiceHelper::init() {
 	// TODO run CommandHelper()->add(); in a do{}while loop to keep adding commands
 }
 
+static void finish(int) { is_running = false; }
+
 void ServiceHelper::run() {
 	int device_port = midiHelper->getInputDeviceId( configHelper->getDevice() );
 
@@ -137,14 +139,16 @@ void ServiceHelper::run() {
 	std::map<int, const char*> commands = configHelper->getCommands();
 	std::map<int, const char*>::iterator iter;
 	MidiEvent event;
-
+	
 	if (configHelper->getFeedback()) {
 		for (iter = commands.begin(); iter != commands.end(); iter++) {
 			midiHelper->sendFeedback(MidiEvent(iter->first));
 		}
 	}
 
-	while (true) {
+	is_running = true;
+	(void) signal(SIGINT, finish);
+	while (is_running) {
 		event = midiHelper->getMessage();
 
 		if (event.isOk()) {
@@ -156,6 +160,12 @@ void ServiceHelper::run() {
 		}
 
 		usleep(10);
+	}
+
+	if (configHelper->getFeedback()) {
+		for (iter = commands.begin(); iter != commands.end(); iter++) {
+			midiHelper->cancelFeedback(MidiEvent(iter->first));
+		}
 	}
 }
 
