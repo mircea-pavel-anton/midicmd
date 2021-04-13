@@ -3,6 +3,7 @@
 
 #include <unistd.h>
 #include <iostream>
+#include <algorithm>
 
 namespace Colors {
 	namespace Foreground {
@@ -54,6 +55,22 @@ inline std::string toBold(std::string str) {
 	return Colors::Modifiers::Bright + str + Colors::Modifiers::Reset;
 }
 
+inline bool getYesNo(std::string prompt) {
+	std::string user_input = "";
+	bool is_input_ok = false;
+	bool status = false;
+
+	std::cout << prompt << "[y/n]: ";
+	do {
+		std::cin >> user_input;
+		std::transform(user_input.begin(), user_input.end(), user_input.begin(), ::toupper);
+
+		status = (user_input == "Y" || user_input == "YES");
+		is_input_ok = (user_input == "Y" || user_input == "N") || status;
+	} while (is_input_ok == false);
+
+	return status;
+}
 
 inline bool isRoot() { return geteuid() == 0; };
 
