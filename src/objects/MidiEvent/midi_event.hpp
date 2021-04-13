@@ -11,17 +11,18 @@ class MidiEvent {
 	public:
 		MidiEvent() {};
 		MidiEvent(double, std::vector<unsigned char>);
+		MidiEvent(int);
 
-		std::string getEventName();
-		std::string getNoteName();
-		int getEventId() { return event; };
-		int getChannel() { return channel; };
-		int getNoteId() { return note; };
-		int getVelocity() { return velocity; };
-		double getTimestamp() { return timestamp; }
-		int getUID() { return uid; };
-
-		bool isOk() { return timestamp != 0 && uid != 0; };
+		std::string getEventName() const;
+		std::string getNoteName() const;
+		int getEventId() const { return event; };
+		int getChannel() const { return channel; };
+		int getNoteId() const { return note; };
+		int getVelocity() const { return velocity; };
+		double getTimestamp() const { return timestamp; }
+		int getUID() const { return uid; };
+		std::vector<unsigned char> getFeedback() const;
+		bool isOk() const { return timestamp != 0 && uid != 0; };
 	private:
 		double timestamp = 0;
 		int uid = 0;

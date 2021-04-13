@@ -9,7 +9,7 @@ MidiEvent::MidiEvent(double _timestamp, std::vector<unsigned char> _code) {
 		timestamp = _timestamp;
 
 		std::stringstream ss;
-		ss << (int)_code[0] << (int)_code[1] << (int)_code[2];
+		ss << (int)_code[0]+400 << (int)_code[1]+400 << (int)_code[2]+400;
 		uid = std::atoi(ss.str().c_str());
 
 		event = _code[0] / 16 * 16;
@@ -17,10 +17,19 @@ MidiEvent::MidiEvent(double _timestamp, std::vector<unsigned char> _code) {
 		note = _code[1];
 		velocity = _code[2];
 	}
-
 }
 
-std::string MidiEvent::getEventName() {
+MidiEvent::MidiEvent(int _uid) {
+	timestamp = 0;
+	uid = _uid;
+	int aux = uid / 1000000 - 400;
+	event = aux / 16 * 16;
+	channel = aux % 16;
+	note = uid / 1000 % 1000 - 400;
+	velocity = uid % 1000;
+}
+
+std::string MidiEvent::getEventName() const {
 	switch (getEventId()) {
 		case 128: return "Note Off";
 		case 144: return "Note On";
@@ -31,7 +40,7 @@ std::string MidiEvent::getEventName() {
 	}
 }
 
-std::string MidiEvent::getNoteName() {
+std::string MidiEvent::getNoteName() const {
 	std::vector<std::string> note_names = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
 	int octave = note / 12;
 	int note_index = note % 12;
@@ -41,4 +50,12 @@ std::string MidiEvent::getNoteName() {
 	stream << std::to_string(octave - 2);
 
 	return stream.str();
+}
+
+std::vector<unsigned char> MidiEvent::getFeedback() const {
+	std::vector<unsigned char> feedback_message = {0, 0, 0};
+	feedback_message[0] = event + channel;
+	feedback_message[1] = note;
+	feedback_message[2] = 127;
+	return feedback_message;
 }
