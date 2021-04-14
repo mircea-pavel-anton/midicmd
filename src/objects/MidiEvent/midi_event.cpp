@@ -1,5 +1,8 @@
 #include "midi_event.hpp"
 
+namespace midicmd {
+namespace midi {
+
 MidiEvent::MidiEvent(double _timestamp, std::vector<unsigned char> _code) {
 	if (_code.size() != 3) {
 		timestamp = 0;
@@ -66,3 +69,5 @@ std::vector<unsigned char> MidiEvent::getCancelFeedback() const {
 	feedback_message[2] = 0;
 	return feedback_message;
 }
+} //namespace midi
+} //namespace midicmd

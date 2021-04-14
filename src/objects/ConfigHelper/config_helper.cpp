@@ -1,10 +1,14 @@
 #include "config_helper.hpp"
 
+namespace midicmd {
+namespace config {
+
+
 ConfigHelper::ConfigHelper() {
 	cache = Config();
 	conf_file_dir = getenv("HOME");
 	conf_file_dir += "/.config/midicmd/";
-}
+} //ConfigHelper::ConfigHelper()
 
 //* Config File I/O *//
 void ConfigHelper::cacheFileContents() {
@@ -50,7 +54,7 @@ void ConfigHelper::cacheFileContents() {
 
 	cache.isSet = true;
 	file.close();
-}
+} //ConfigHelper::cacheFileContents()
 
 void ConfigHelper::write(Config &config) {
 	std::filesystem::create_directories(conf_file_dir);
@@ -67,7 +71,7 @@ void ConfigHelper::write(Config &config) {
 	}
 
 	file.close();
-}
+} //ConfigHelper::write(Config &config)
 
 bool ConfigHelper::checkFile() {
 	std::string device = getDevice();
@@ -75,40 +79,43 @@ bool ConfigHelper::checkFile() {
 	std::map<int, const char*> commands = getCommands();
 	if (commands.empty()) return false;
 	return true;
-}
+} //ConfigHelper::checkFile()
 
 
 //* GETTERS *//
 std::string ConfigHelper::getDevice() {
 	if (cache.isSet == false) cacheFileContents();
 	return cache.device;
-}
+} //ConfigHelper::getDevice()
 
 std::map<int, const char*> ConfigHelper::getCommands() {
 	if (cache.isSet == false) cacheFileContents();
 	return cache.commands;
-}
+} //ConfigHelper::getCommands()
 
 bool ConfigHelper::getFeedback() {
 	if (cache.isSet == false) cacheFileContents();
 	return cache.feedback;
-}
+} //ConfigHelper::getFeedback()
 
 //* SETTERS *//
 void ConfigHelper::setDevice(std::string device) {
 	if (cache.isSet == false) cacheFileContents();
 	cache.device = device;
 	write(cache);
-}
+} //ConfigHelper::setDevice(std::string device)
 
 void ConfigHelper::setFeedback(bool feedback) {
 	if (cache.isSet == false) cacheFileContents();
 	cache.feedback = feedback;
 	write(cache);
-}
+} //ConfigHelper::setFeedback(bool feedback)
 
 void ConfigHelper::setCommands(std::map<int, const char*> commands) {
 	if (cache.isSet == false) cacheFileContents();
 	cache.commands = commands;
 	write(cache);
-}
+} //ConfigHelper::setCommands(std::map<int, const char*> commands)
+
+} //namespace config
+} //namespace midicmd

@@ -5,6 +5,13 @@
 #include "../MidiHelper/midi_helper.hpp"
 #include "../Utils/utils.hpp"
 
+namespace midicmd {
+namespace command {
+
+using midicmd::midi::MidiHelper;
+using midicmd::config::ConfigHelper;
+
+
 class CommandHelper {
 	public:
 		CommandHelper(MidiHelper*, ConfigHelper*);
@@ -18,5 +25,7 @@ class CommandHelper {
 		MidiHelper *midiHelper;
 		ConfigHelper *configHelper;
 }; //CommandHelper
+} //namespace midicmd
+} //namespace command
 
 #endif //COMMAND_HELPER_CLASS

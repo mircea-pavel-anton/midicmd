@@ -1,6 +1,9 @@
 #include "device_helper.hpp"
 
-DeviceHelper::DeviceHelper(MidiHelper *midi, ConfigHelper *config) {
+namespace midicmd {
+namespace device {
+
+DeviceHelper::DeviceHelper(midi::MidiHelper *midi, config::ConfigHelper *config) {
 	midiHelper = midi;
 	configHelper = config;
 }
@@ -16,7 +19,7 @@ void DeviceHelper::list() {
 	for (int i = 0; i < device_count; i++) {
 		std::cout << "\t" << i << ") " << devices[i] << std::endl;
 	}
-}
+} //DeviceHelper::list()
 
 void DeviceHelper::set() {
 	list();
@@ -40,7 +43,7 @@ void DeviceHelper::set() {
 	} while (is_value_ok == false);
 
 	set(value);
-}
+} //DeviceHelper::set()
 
 void DeviceHelper::set(int port_id) {
 	try {
@@ -51,7 +54,7 @@ void DeviceHelper::set(int port_id) {
 		std::cout << toRed("Failed to set device. Index out of range!");
 		std::cout << std::endl;
 	}
-}
+} //DeviceHelper::set(int port_id)
 
 void DeviceHelper::status() {
 	std::string device_name = configHelper->getDevice();
@@ -78,7 +81,7 @@ void DeviceHelper::status() {
 		std::cout << "Midi feedback is disabled in the config. ";
 		std::cout << "No device selected for output." << std::endl;
 	}
-}
+} //DeviceHelper::status()
 
 void DeviceHelper::help() {
 	using std::cout; using std::endl;
@@ -106,4 +109,7 @@ void DeviceHelper::help() {
 	cout << toBold("    status\t\t") << endl;
 	cout << "Shows the currently selected device(s).";
 	cout << endl << endl;
-}
+} //DeviceHelper::help()
+
+} //namespace device
+} //namespace midicmd

@@ -3,7 +3,7 @@
 bool is_running = false;
 
 int main(int argc, char **argv) {
-	ArgParser parser = ArgParser();
+	midicmd::ArgParser parser = midicmd::ArgParser();
 
 	parser.parse(argc, argv);
 

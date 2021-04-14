@@ -5,9 +5,12 @@
 #include "../ConfigHelper/config_helper.hpp"
 #include "../Utils/utils.hpp"
 
+namespace midicmd {
+namespace device {
+
 class DeviceHelper {
 	public:
-		DeviceHelper(MidiHelper *midi, ConfigHelper *config);
+		DeviceHelper(midi::MidiHelper *midi, config::ConfigHelper *config);
 		~DeviceHelper();
 
 		void list();
@@ -17,8 +20,11 @@ class DeviceHelper {
 		void help();
 
 	private:
-		MidiHelper *midiHelper;
-		ConfigHelper *configHelper;
-};
+		midi::MidiHelper *midiHelper;
+		config::ConfigHelper *configHelper;
+}; //DeviceHelper
+
+} //namespace midicmd
+} //namespace device
 
 #endif //DEVICE_HELPER_CLASS

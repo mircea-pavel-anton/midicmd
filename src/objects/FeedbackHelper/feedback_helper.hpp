@@ -4,9 +4,12 @@
 #include "../ConfigHelper/config_helper.hpp"
 #include "../Utils/utils.hpp"
 
+namespace midicmd {
+namespace feedback {
+
 class FeedbackHelper{
 	public:
-		FeedbackHelper(ConfigHelper *helper);
+		FeedbackHelper(config::ConfigHelper *helper);
 		~FeedbackHelper();
 
 		void enable();
@@ -15,7 +18,10 @@ class FeedbackHelper{
 		void help();
 
 	private:
-		ConfigHelper *configHelper;
-};
+		config::ConfigHelper *configHelper;
+}; //FeedbackHelper
+
+} //namespace midicmd
+} //namespace feedback
 
 #endif //FEEDBACK_HELPER_CLASS

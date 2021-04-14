@@ -1,14 +1,16 @@
 #include "arg_parser.hpp"
 
-ArgParser::ArgParser() {
-	midiHelper = new MidiHelper();
+namespace midicmd {
 
-	configHelper = new ConfigHelper();
-	feedbackHelper = new FeedbackHelper(configHelper);
-	deviceHelper = new DeviceHelper(midiHelper, configHelper);
-	commandHelper = new CommandHelper(midiHelper, configHelper);
-	serviceHelper = new ServiceHelper(midiHelper, configHelper, deviceHelper, feedbackHelper, commandHelper);
-}
+ArgParser::ArgParser() {
+	midiHelper = new midi::MidiHelper();
+
+	configHelper = new config::ConfigHelper();
+	feedbackHelper = new feedback::FeedbackHelper(configHelper);
+	deviceHelper = new device::DeviceHelper(midiHelper, configHelper);
+	commandHelper = new command::CommandHelper(midiHelper, configHelper);
+	serviceHelper = new service::ServiceHelper(midiHelper, configHelper, deviceHelper, feedbackHelper, commandHelper);
+} //ArgParser()
 
 ArgParser::~ArgParser() {
 	if (serviceHelper != nullptr) delete serviceHelper;
@@ -16,7 +18,7 @@ ArgParser::~ArgParser() {
 	if (deviceHelper != nullptr) delete deviceHelper;
 	if (feedbackHelper != nullptr) delete feedbackHelper;
 	if (configHelper != nullptr) delete configHelper;
-}
+} //~ArgParser()
 
 
 void ArgParser::parse(int argc, char **argv) {
@@ -44,7 +46,7 @@ void ArgParser::parse(int argc, char **argv) {
 	std::cout << toRed("Unknown command!") << std::endl;
 	std::cout << "Run " << toYellow("midicmd help") << " for more details.";
 	std::cout << std::endl;
-} //ArgParser::parse
+} //ArgParser::parse(int argc, char **argv)
 
 void ArgParser::parse_device(int argc, char **argv) {
 	if (argc < 3) {
@@ -79,7 +81,7 @@ void ArgParser::parse_device(int argc, char **argv) {
 	std::cout << toRed("Unknown command!") << std::endl;
 	std::cout << "Run " << toYellow("midicmd device help") << " for more details.";
 	std::cout << std::endl;
-}
+} //ArgParser::parse_device(int argc, char **argv)
 
 void ArgParser::parse_command(int argc, char **argv) {
 	if (argc < 3) {
@@ -102,7 +104,7 @@ void ArgParser::parse_command(int argc, char **argv) {
 	std::cout << toRed("Unknown command!") << std::endl;
 	std::cout << "Run " << toYellow("midicmd command help") << " for more details.";
 	std::cout << std::endl;
-}
+} //ArgParser::parse_command(int argc, char **argv)
 
 void ArgParser::parse_feedback(int argc, char **argv) {
 	if (argc < 3) {
@@ -124,4 +126,6 @@ void ArgParser::parse_feedback(int argc, char **argv) {
 	std::cout << toRed("Unknown command!") << std::endl;
 	std::cout << "Run " << toYellow("midicmd feedback help") << " for more details.";
 	std::cout << std::endl;
-}
+} //ArgParser::parse_feedback(int argc, char **argv)
+
+} //namespace midicmd

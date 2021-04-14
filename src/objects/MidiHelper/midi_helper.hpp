@@ -1,10 +1,12 @@
-#ifndef MIDIHELPER_CLASS
-#define MIDIHELPER_CLASS
+#ifndef MIDI_HELPER_CLASS
+#define MIDI_HELPER_CLASS
 
 #include "../../../lib/RtMidi.hpp"
 #include "../Utils/utils.hpp"
 #include "../MidiEvent/midi_event.hpp"
 
+namespace midicmd {
+namespace midi {
 class MidiHelper {
 	public:
 		MidiHelper();
@@ -35,5 +37,7 @@ class MidiHelper {
 		void setDevice(RtMidi *, int&);
 		std::vector<std::string> getDevices(RtMidi *);
 }; //MidiHelper
+} //namespace midicmd
+} //namespace midi
 
-#endif //MIDIHELPER_CLASS
+#endif //MIDI_HELPER_CLASS

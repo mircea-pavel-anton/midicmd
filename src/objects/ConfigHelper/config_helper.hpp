@@ -8,6 +8,8 @@
 
 #include "../Config/config.hpp"
 
+namespace midicmd {
+namespace config {
 class ConfigHelper {
 	public:
 		ConfigHelper();
@@ -30,6 +32,8 @@ class ConfigHelper {
 		Config cache;
 
 		void cacheFileContents();
-};
+}; //ConfigHelper
+} //namespace midicmd
+} //namespace config
 
 #endif //CONFIG_HELPER_CLASS

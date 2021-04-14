@@ -1,6 +1,9 @@
 #include "service_helper.hpp"
 
-ServiceHelper::ServiceHelper(MidiHelper *midi, ConfigHelper *config, DeviceHelper *device, FeedbackHelper *feedback, CommandHelper *command) {
+namespace midicmd {
+namespace service {
+
+ServiceHelper::ServiceHelper(midi::MidiHelper *midi, config::ConfigHelper *config, device::DeviceHelper *device, feedback::FeedbackHelper *feedback, command::CommandHelper *command) {
 	midiHelper = midi;
 	configHelper = config;
 	deviceHelper = device;
@@ -23,7 +26,7 @@ void ServiceHelper::start() const {
 		std::cout << toRed("Failed to start the daemon!") << std::endl;
 		exit(1);
 	}
-}
+} //ServiceHelper::start()
 
 void ServiceHelper::stop() const {
 	if (!isRunning()) {
@@ -37,7 +40,7 @@ void ServiceHelper::stop() const {
 		std::cout << toRed("Failed to stop daemon!") << std::endl;
 		exit(1);
 	}
-}
+} //ServiceHelper::stop()
 
 void ServiceHelper::enable() const {
 	if (system(command_enable) == 0) {
@@ -51,7 +54,7 @@ void ServiceHelper::enable() const {
 		std::cout << toRed("Failed to enable the service!") << std::endl;
 		exit(1);
 	}
-}
+} //ServiceHelper::enable()
 
 void ServiceHelper::disable() const {
 	if (system(command_disable) == 0) {
@@ -65,7 +68,7 @@ void ServiceHelper::disable() const {
 		std::cout << toRed("Failed to disable the service!") << std::endl;
 		exit(1);
 	}
-}
+} //ServiceHelper::disable()
 
 void ServiceHelper::status() const {
 	std::cout << "Daemon status: ";
@@ -75,7 +78,7 @@ void ServiceHelper::status() const {
 	} else {
 		std::cout << toRed("stopped") << std::endl;
 	}
-}
+} //ServiceHelper::status()
 
 void ServiceHelper::init() const {
 	createServiceFile();
@@ -89,7 +92,7 @@ void ServiceHelper::init() const {
 	std::cout << "Now it's time to add your first command!" << std::endl;
 	commandHelper->add();
 	std::cout << "To add more commands, use " << toYellow("sudo midicmd commands add") << std::endl;
-}
+} //ServiceHelper::init()
 
 void ServiceHelper::run() const {
 	int device_port = midiHelper->getInputDeviceId( configHelper->getDevice() );
@@ -110,7 +113,7 @@ void ServiceHelper::run() const {
 	sendAllFeedback(commands);
 	listen(commands);
 	cancelAllFeedback(commands);
-}
+} //ServiceHelper::run()
 
 void ServiceHelper::help() const {
 	using std::cout; using std::endl;
@@ -130,4 +133,9 @@ void ServiceHelper::help() const {
 	
 	cout << toBold("    ps\t\t") << endl;
 	cout << toBold("    status\t\t") << "Reports the status of the midicmd daemon [running/stopped]" << endl;
-}
+} //ServiceHelper::help()
+
+
+} //namespace service
+} //namespace midicmd
+

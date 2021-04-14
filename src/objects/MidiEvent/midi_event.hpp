@@ -7,6 +7,8 @@
 
 #include "../Utils/utils.hpp"
 
+namespace midicmd {
+namespace midi {
 class MidiEvent {
 	public:
 		MidiEvent() {};
@@ -32,5 +34,8 @@ class MidiEvent {
 		int channel = 0;
 		int velocity = 0;
 }; //MidiEvent
+} //namespace midicmd
+} //namespace midi
+
 
 #endif //MIDI_EVENT_CLASS

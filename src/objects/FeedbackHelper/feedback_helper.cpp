@@ -1,6 +1,9 @@
 #include "feedback_helper.hpp"
 
-FeedbackHelper::FeedbackHelper(ConfigHelper *config) { configHelper = config; }
+namespace midicmd {
+namespace feedback {
+
+FeedbackHelper::FeedbackHelper(config::ConfigHelper *config) { configHelper = config; }
 FeedbackHelper::~FeedbackHelper() { /* we don't delete here, but in ArgParser */ }
 
 void FeedbackHelper::enable() {
@@ -10,7 +13,7 @@ void FeedbackHelper::enable() {
 		configHelper->setFeedback(true);
 		std::cout << toGreen("MiDi feedback enabled!") << std::endl;
 	}
-}
+} //FeedbackHelper::enable()
 
 void FeedbackHelper::disable() {
 	if (configHelper->getFeedback()) {
@@ -19,7 +22,7 @@ void FeedbackHelper::disable() {
 	} else {
 		std::cout << toYellow("MiDi feedback is already disabled!") << std::endl;
 	}
-}
+} //FeedbackHelper::disable()
 
 void FeedbackHelper::status() {
 	std::cout << "MiDi feedback is currently ";
@@ -28,7 +31,7 @@ void FeedbackHelper::status() {
 	} else {
 		std::cout << toRed("disabled") << std::endl;
 	}
-}
+} //FeedbackHelper::status()
 
 void FeedbackHelper::help() {
 	using std::cout; using std::endl;
@@ -42,4 +45,7 @@ void FeedbackHelper::help() {
 	cout << toBold("    ps\t\t") << endl;
 	cout << toBold("    status\t\t") << "Shows the current status of MiDi feedback.";
 	cout << endl << endl;
-}
+} //FeedbackHelper::help()
+
+} //namespace feedback
+} //namespace midicmd

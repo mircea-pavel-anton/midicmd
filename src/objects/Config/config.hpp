@@ -4,6 +4,8 @@
 #include <map>
 #include <string>
 
+namespace midicmd {
+namespace config {
 class Config {
 	public:
 		// Instance variables
@@ -21,5 +23,7 @@ class Config {
 			commands(_commands),
 			isSet(true) {};
 }; //Config
+} //namespace midicmd
+} //namespace config
 
 #endif //CONFIG_CLASS

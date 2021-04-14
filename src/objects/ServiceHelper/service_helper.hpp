@@ -15,9 +15,13 @@
 
 extern bool is_running;
 
+namespace midicmd {
+namespace service {
+
+
 class ServiceHelper {
 	public:
-		ServiceHelper(MidiHelper*, ConfigHelper*, DeviceHelper*, FeedbackHelper*, CommandHelper*);
+		ServiceHelper(midi::MidiHelper*, config::ConfigHelper*, device::DeviceHelper*, feedback::FeedbackHelper*, command::CommandHelper*);
 		~ServiceHelper() {};
 
 		void start() const;
@@ -39,11 +43,11 @@ class ServiceHelper {
 		const char *command_disable = "systemctl --user disable midicmd.service";
 		const char *command_status = "systemctl --user status midicmd | grep running | wc -l";
 
-		MidiHelper *midiHelper;
-		ConfigHelper *configHelper;
-		DeviceHelper *deviceHelper;
-		FeedbackHelper *feedbackHelper;
-		CommandHelper *commandHelper;
+		midi::MidiHelper *midiHelper;
+		config::ConfigHelper *configHelper;
+		device::DeviceHelper *deviceHelper;
+		feedback::FeedbackHelper *feedbackHelper;
+		command::CommandHelper *commandHelper;
 
 		bool isRunning() const;
 
@@ -53,6 +57,8 @@ class ServiceHelper {
 		void sendAllFeedback(const std::map<int, const char*>&) const;
 		void cancelAllFeedback(const std::map<int, const char*>&) const;
 		void listen(const std::map<int, const char*>&) const;
-};
+}; //ServiceHelper
+} //namespace midicmd
+} //namespace service
 
 #endif //SERVICE_HELPER_CLASS

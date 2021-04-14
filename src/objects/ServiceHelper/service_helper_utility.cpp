@@ -1,6 +1,11 @@
 #include "service_helper.hpp"
 
-void ServiceHelper::finish(int) { is_running = false; }
+namespace midicmd {
+namespace service {
+
+void ServiceHelper::finish(int) {
+	is_running = false;
+} //ServiceHelper::finish(int)
 
 bool ServiceHelper::isRunning() const {
 	std::array<char, 128> buffer;
@@ -16,26 +21,26 @@ bool ServiceHelper::isRunning() const {
 	}
 	
 	return (result.compare("1\n") == 0);
-}
+} //ServiceHelper::isRunning()
 
 void ServiceHelper::sendAllFeedback(const std::map<int, const char*> &commands) const {
 	if (configHelper->getFeedback()) {
 		for (auto iter = commands.begin(); iter != commands.end(); iter++) {
-			midiHelper->sendFeedback(MidiEvent(iter->first));
+			midiHelper->sendFeedback(midi::MidiEvent(iter->first));
 		}
 	}
-}
+} //ServiceHelper::sendAllFeedback(const std::map<int, const char*> &commands)
 
 void ServiceHelper::cancelAllFeedback(const std::map<int, const char*> &commands) const {
 	if (configHelper->getFeedback()) {
 		for (auto iter = commands.begin(); iter != commands.end(); iter++) {
-			midiHelper->cancelFeedback(MidiEvent(iter->first));
+			midiHelper->cancelFeedback(midi::MidiEvent(iter->first));
 		}
 	}
-}
+} //ServiceHelper::cancelAllFeedback(const std::map<int, const char*> &commands)
 
 void ServiceHelper::listen(const std::map<int, const char*> &commands) const {
-	MidiEvent event;
+	midi::MidiEvent event;
 	while (is_running) {
 		event = midiHelper->getMessage();
 
@@ -49,7 +54,7 @@ void ServiceHelper::listen(const std::map<int, const char*> &commands) const {
 
 		usleep(10);
 	}
-}
+} //ServiceHelper::listen(const std::map<int, const char*> &commands)
 
 void ServiceHelper::createServiceFile() const {
 	std::filesystem::create_directories(service_file_dir);
@@ -66,4 +71,7 @@ void ServiceHelper::createServiceFile() const {
 
 	file << "[Install]" << std::endl;
 	file << "WantedBy=default.target" << std::endl;
-}
+} //ServiceHelper::createServiceFile()
+
+} //namespace midicmd
+} //namespace service

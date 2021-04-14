@@ -1,6 +1,9 @@
 #include "command_helper.hpp"
 
-CommandHelper::CommandHelper(MidiHelper *midi, ConfigHelper *config) {
+namespace midicmd {
+namespace command {
+
+CommandHelper::CommandHelper(midi::MidiHelper *midi, config::ConfigHelper *config) {
 	midiHelper = midi;
 	configHelper = config;
 }
@@ -18,7 +21,7 @@ void CommandHelper::add() {
 	} 
 	std::string command = "";
 	bool status = false;
-	MidiEvent event;
+	midi::MidiEvent event;
 	auto commands = configHelper->getCommands();
 
 	std::cout << "Press the key on your midi device you want to bind a macro to:" << std::endl;
@@ -124,3 +127,7 @@ void CommandHelper::help() {
 	cout << toBold("    list\t\t") << "Lists all commands." << endl;
 	cout << endl;
 }
+
+
+} //namespace command
+} //namespace midicmd
