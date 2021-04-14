@@ -10,24 +10,30 @@
 
 namespace midicmd {
 
+/**
+ *  An object that parses the CLI options and delegates
+ * tasks to the appropriate *Helper class
+**/
 class ArgParser {
 	public:
-		ArgParser();
-		~ArgParser();
+		// Empty constructor & destructor
+		ArgParser() {};
+		~ArgParser() {};
 
-		void parse(int, char**);
-
+		// Main parser method, calls the specialised private parsers
+		void parse(int, char**) const;
 	private:
-		command::CommandHelper *commandHelper;
-		config::ConfigHelper *configHelper;
-		device::DeviceHelper *deviceHelper;
-		feedback::FeedbackHelper *feedbackHelper;
-		midi::MidiHelper *midiHelper;
-		service::ServiceHelper *serviceHelper;
+		// Parser method for service-related commands
+		void parse_service(int, char**) const;
 
-		void parse_command(int, char**);
-		void parse_device(int, char**);
-		void parse_feedback(int, char**);
+		// Parser method for command-related commands
+		void parse_command(int, char**) const;
+
+		// Parser method for device-related commands
+		void parse_device(int, char**) const;
+
+		// Parser method for feedback-related commands
+		void parse_feedback(int, char**) const;
 }; //ArgParser
 
 } //namespace midicmd

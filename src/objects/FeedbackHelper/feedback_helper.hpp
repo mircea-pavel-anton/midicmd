@@ -7,18 +7,19 @@
 namespace midicmd {
 namespace feedback {
 
+/**
+ * Class that provides the ability to toggle midi feedback on or off
+ * in the config file, as well as get its current status
+**/
 class FeedbackHelper{
 	public:
-		FeedbackHelper(config::ConfigHelper *helper);
-		~FeedbackHelper();
+		FeedbackHelper() {};
+		~FeedbackHelper() {};
 
-		void enable();
-		void disable();
-		void status();
-		void help();
-
-	private:
-		config::ConfigHelper *configHelper;
+		void enable() const;
+		void disable() const;
+		void status() const;
+		void help() const;
 }; //FeedbackHelper
 
 } //namespace midicmd

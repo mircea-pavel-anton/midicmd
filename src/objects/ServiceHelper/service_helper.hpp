@@ -21,7 +21,7 @@ namespace service {
 
 class ServiceHelper {
 	public:
-		ServiceHelper(midi::MidiHelper*, config::ConfigHelper*, device::DeviceHelper*, feedback::FeedbackHelper*, command::CommandHelper*);
+		ServiceHelper() {};
 		~ServiceHelper() {};
 
 		void start() const;
@@ -35,7 +35,7 @@ class ServiceHelper {
 		void run() const;
 		void help() const;
 	private:
-		std::string service_file_dir;
+		const std::string service_file_dir = std::string(getenv("HOME")) + "/.local/share/systemd/user/";
 		const std::string service_file_name = "midicmd.service";
 		const char *command_start = "systemctl --user start midicmd.service";
 		const char *command_stop = "systemctl --user stop midicmd.service";
@@ -43,19 +43,13 @@ class ServiceHelper {
 		const char *command_disable = "systemctl --user disable midicmd.service";
 		const char *command_status = "systemctl --user status midicmd | grep running | wc -l";
 
-		midi::MidiHelper *midiHelper;
-		config::ConfigHelper *configHelper;
-		device::DeviceHelper *deviceHelper;
-		feedback::FeedbackHelper *feedbackHelper;
-		command::CommandHelper *commandHelper;
-
 		bool isRunning() const;
 
 		void createServiceFile() const;
 
 		static void finish(int);
-		void sendAllFeedback(const std::map<int, const char*>&) const;
-		void cancelAllFeedback(const std::map<int, const char*>&) const;
+		void sendAllFeedback(const std::map<int, const char*>&, const bool&) const;
+		void cancelAllFeedback(const std::map<int, const char*>&, const bool&) const;
 		void listen(const std::map<int, const char*>&) const;
 }; //ServiceHelper
 } //namespace midicmd

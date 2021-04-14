@@ -3,37 +3,44 @@
 namespace midicmd {
 namespace feedback {
 
-FeedbackHelper::FeedbackHelper(config::ConfigHelper *config) { configHelper = config; }
-FeedbackHelper::~FeedbackHelper() { /* we don't delete here, but in ArgParser */ }
+/* Set feedback to True in the config file */
+void FeedbackHelper::enable() const {
+	auto configHelper = config::ConfigHelper();
 
-void FeedbackHelper::enable() {
-	if (configHelper->getFeedback()) {
+	if (configHelper.getFeedback()) {
 		std::cout << toYellow("MiDi feedback is already enabled!") << std::endl;
 	} else {
-		configHelper->setFeedback(true);
+		configHelper.setFeedback(true);
 		std::cout << toGreen("MiDi feedback enabled!") << std::endl;
 	}
 } //FeedbackHelper::enable()
 
-void FeedbackHelper::disable() {
-	if (configHelper->getFeedback()) {
-		configHelper->setFeedback(false);
+/* Set feedback to False in the config file */
+void FeedbackHelper::disable() const {
+	auto configHelper = config::ConfigHelper();
+
+	if (configHelper.getFeedback()) {
+		configHelper.setFeedback(false);
 		std::cout << toGreen("MiDi feedback disabled!") << std::endl;
 	} else {
 		std::cout << toYellow("MiDi feedback is already disabled!") << std::endl;
 	}
 } //FeedbackHelper::disable()
 
-void FeedbackHelper::status() {
+/* Print the status of feedback from the config file to stdout */
+void FeedbackHelper::status() const {
+	auto configHelper = config::ConfigHelper();
+
 	std::cout << "MiDi feedback is currently ";
-	if (configHelper->getFeedback()) {
+	if (configHelper.getFeedback()) {
 		std::cout << toGreen("enabled") << std::endl;
 	} else {
 		std::cout << toRed("disabled") << std::endl;
 	}
 } //FeedbackHelper::status()
 
-void FeedbackHelper::help() {
+/* Shows all the available commands and a short explanation as to what they do */
+void FeedbackHelper::help() const {
 	using std::cout; using std::endl;
 
 	cout << toYellow("Usage: ") << "midicmd feedback [OPTION]" << endl << endl;

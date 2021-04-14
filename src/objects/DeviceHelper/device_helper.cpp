@@ -3,14 +3,11 @@
 namespace midicmd {
 namespace device {
 
-DeviceHelper::DeviceHelper(midi::MidiHelper *midi, config::ConfigHelper *config) {
-	midiHelper = midi;
-	configHelper = config;
-}
-DeviceHelper::~DeviceHelper() { /* we don't delete here, but in ArgParser */ }
+/* Prints an indexed list of all the available devices connected to the computer */
+void DeviceHelper::list() const {
+	auto midiHelper = midi::MidiHelper();
 
-void DeviceHelper::list() {
-	std::vector<std::string> devices = midiHelper->getInputDevices();
+	std::vector<std::string> devices = midiHelper.getInputDevices();
 	const int device_count = devices.size();
 
 	std::cout << toGreen("There are " + std::to_string(device_count) + " devices available:");
@@ -21,12 +18,17 @@ void DeviceHelper::list() {
 	}
 } //DeviceHelper::list()
 
-void DeviceHelper::set() {
-	list();
+/**
+ * Prints an indexed list of all the available devices connected to the computer and
+ * then it prompts the user to pick one (based on the index)
+**/
+void DeviceHelper::set() const {
+	list(); // print a list of all the devices
 
-	int device_count = midiHelper->getInputPortCount();
+	const auto midiHelper = midi::MidiHelper();
+	const int device_count = midiHelper.getInputPortCount();
 	std::string user_input = "";
-	int value = 0;
+	int value = 0; // the integer value extracted from @user_input
 	bool is_value_ok = false;
 
 	do {
@@ -35,7 +37,13 @@ void DeviceHelper::set() {
 
 		try {
 			value = std::stoi(user_input);
+
+			// if the user provided int is within the bounds of [0, device_count)
 			is_value_ok = (value >= 0 && value < device_count);
+
+			if (!is_value_ok) {
+				std::cout << toRed("Invalid value!") << std::endl;
+			}
 		} catch (std::invalid_argument &err){
 			std::cout << toRed("Invalid argument!") << std::endl;
 			is_value_ok = false;
@@ -45,10 +53,14 @@ void DeviceHelper::set() {
 	set(value);
 } //DeviceHelper::set()
 
-void DeviceHelper::set(int port_id) {
+/* Sets the given port_id as the active midi device this program will listen to */
+void DeviceHelper::set(int port_id) const {
+	const auto midiHelper = midi::MidiHelper();
+	auto configHelper = config::ConfigHelper();
+
 	try {
-		std::string device_name = midiHelper->setInputDevice(port_id);
-		configHelper->setDevice(device_name);
+		std::string device_name = midiHelper.setInputDevice(port_id);
+		configHelper.setDevice(device_name);
 		std::cout << toGreen("Device changed!") << std::endl;
 	} catch(std::range_error &err) {
 		std::cout << toRed("Failed to set device. Index out of range!");
@@ -56,10 +68,13 @@ void DeviceHelper::set(int port_id) {
 	}
 } //DeviceHelper::set(int port_id)
 
-void DeviceHelper::status() {
-	std::string device_name = configHelper->getDevice();
+/* Prints the currently active input (and output if applicable) device(s) */
+void DeviceHelper::status() const {
+	const auto configHelper = config::ConfigHelper();
+	const auto midiHelper = midi::MidiHelper();
+	const std::string device_name = configHelper.getDevice();
 
-	if (midiHelper->getInputDeviceId(device_name) != -1) {
+	if (midiHelper.getInputDeviceId(device_name) != -1) {
 		std::cout << "Currently listenting to: ";
 		std::cout << toYellow(device_name);
 		std::cout << std::endl;
@@ -68,8 +83,8 @@ void DeviceHelper::status() {
 		return;
 	}
 
-	if (configHelper->getFeedback()) {
-		if (midiHelper->getOutputDeviceId(device_name) != -1) {
+	if (configHelper.getFeedback()) {
+		if (midiHelper.getOutputDeviceId(device_name) != -1) {
 			std::cout << "Currently talking to: ";
 			std::cout << toYellow(device_name);
 			std::cout << std::endl;
@@ -83,7 +98,8 @@ void DeviceHelper::status() {
 	}
 } //DeviceHelper::status()
 
-void DeviceHelper::help() {
+/* Shows all the available commands and a short explanation as to what they do */
+void DeviceHelper::help() const {
 	using std::cout; using std::endl;
 
 	cout << toYellow("Usage: ") << "midicmd device [OPTION]" << endl << endl;
@@ -105,7 +121,7 @@ void DeviceHelper::help() {
 	cout << "\t\tas shown via the `ls` option.";
 	cout << endl;
 
-	cout << toBold("    ps\t\t");
+	cout << toBold("    ps\t\t") << endl;
 	cout << toBold("    status\t\t") << endl;
 	cout << "Shows the currently selected device(s).";
 	cout << endl << endl;

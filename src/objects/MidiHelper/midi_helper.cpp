@@ -3,6 +3,7 @@
 namespace midicmd {
 namespace midi {
 
+/** Constructor | Creates a new instance of RtMidiIn and RtMidiOut **/
 MidiHelper::MidiHelper() {
 	try {
 		midiIn = new RtMidiIn();
@@ -12,6 +13,8 @@ MidiHelper::MidiHelper() {
 		exit(1);
 	}
 }
+
+/** Destructor | Closes any open midi ports and deletes the RtMidiIn and RtMidiOut objects **/
 MidiHelper::~MidiHelper() {
 	if (midiIn->isPortOpen()) {
 		midiIn->closePort();
@@ -23,11 +26,13 @@ MidiHelper::~MidiHelper() {
 	}
 }
 
-bool MidiHelper::hasPortOpen() {
+/** Checks whether or not there are any open input ports **/
+bool MidiHelper::hasPortOpen() const {
 	return midiIn->isPortOpen();
-} //MidiHelper::hasPortOpen()
+}
 
-MidiEvent MidiHelper::getMessage() {
+/** Gets a MidiEvent from the currently active device **/
+MidiEvent MidiHelper::getMessage() const {
 	std::vector<unsigned char> data;
 	double timestamp = midiIn->getMessage(&data);
 
@@ -37,19 +42,20 @@ MidiEvent MidiHelper::getMessage() {
 	} catch (std::runtime_error &err) {
 		return MidiEvent();
 	}
-
 } //MidiHelper::getMessage()
 
-//* Retrieve list of devices *//
-std::vector<std::string> MidiHelper::getInputDevices() {
+/** Returns a list of all input devices connected to the computer **/
+std::vector<std::string> MidiHelper::getInputDevices() const {
 	return getDevices(midiIn);
-} //MidiHelper::getInputDevices()
+}
 
-std::vector<std::string> MidiHelper::getOutputDevices() {
+/** Returns a list of all output devices connected to the computer **/
+std::vector<std::string> MidiHelper::getOutputDevices() const {
 	return getDevices(midiOut);
-} //MidiHelper::getOutputDevices()
+}
 
-std::vector<std::string> MidiHelper::getDevices(RtMidi *midi) {
+/** Returns a list of all devices connected to the computer **/
+std::vector<std::string> MidiHelper::getDevices(RtMidi *midi) const {
 	int port_count = midi->getPortCount();
 	std::vector<std::string> devices;
 
@@ -66,15 +72,22 @@ std::vector<std::string> MidiHelper::getDevices(RtMidi *midi) {
 } //MidiHelper::getDevices(RtMidi *midi)
 
 
-//* Set an input/output device *//
-void MidiHelper::setOutputDevice(int port_id) {
+/** Open the give port_id as an output device **/
+void MidiHelper::setOutputDevice(int port_id) const {
 	return setDevice(midiOut, port_id);
-} //MidiHelper::setOutputDevice(int port_id)
+}
 
-std::string MidiHelper::setInputDevice(int port_id) { 
-	setDevice(midiIn, port_id);
+/** Open the give port_id as an input device 
+ * 
+ * If midifeedback is enabled, it opens the port as an output as well.
+**/
+std::string MidiHelper::setInputDevice(int port_id) const { 
+	setDevice(midiIn, port_id); // set the input device
+
+	// Get the device name
 	std::string device_name = midiIn->getPortName(port_id);
 
+	// Open the output port associated to a device with the same name
 	for (int i = 0; i < midiOut->getPortCount(); i++) {
 		if (device_name.compare(midiOut->getPortName(i)) == 0) {
 			setOutputDevice(i);
@@ -84,50 +97,61 @@ std::string MidiHelper::setInputDevice(int port_id) {
 	return device_name;
 } //MidiHelper::setInputDevice(int port_id)
 
-void MidiHelper::setDevice(RtMidi *midi, int &port_id) {
+/** Open the given port **/
+void MidiHelper::setDevice(RtMidi *midi, int &port_id) const {
 	if (port_id >= midi->getPortCount() || port_id < 0) {
 		throw std::range_error("Port number out of range!");
 	}
 	midi->openPort(port_id);
 } //MidiHelper::setDevice(RtMidi *midi, int &port_id)
 
-//* Get number of devices *//
-int MidiHelper::getOutputPortCount() {
+/** Get number of output devices **/
+int MidiHelper::getOutputPortCount() const {
 	return midiOut->getPortCount();
-} //MidiHelper::getOutputPortCount()
+}
 
-int MidiHelper::getInputPortCount() {
+/** Get number of input devices **/
+int MidiHelper::getInputPortCount() const {
 	return midiIn->getPortCount();
-} //MidiHelper::getInputPortCount()
+}
 
 
-//* Get the id of a device based on its name *//
-int MidiHelper::getInputDeviceId(std::string device_name) {
+/** Get the id of the port that matches the given input @device_name **/
+int MidiHelper::getInputDeviceId(std::string device_name) const {
 	return getDeviceId(midiIn, device_name);
-} //MidiHelper::getInputDeviceId(std::string device_name)
+}
 
-int MidiHelper::getOutputDeviceId(std::string device_name) {
+/** Get the id of the port that matches the given output @device_name **/
+int MidiHelper::getOutputDeviceId(std::string device_name) const {
 	return getDeviceId(midiOut, device_name);
-} //MidiHelper::getOutputDeviceId(std::string device_name)
+}
 
-int MidiHelper::getDeviceId(RtMidi *midi, std::string device_name) {
+/** Get the id of the port that matches the given @device_name **/
+int MidiHelper::getDeviceId(RtMidi *midi, std::string device_name) const {
+	// Loop through all available devices and compare the names
 	for (int i = 0; i < midi->getPortCount(); i++) {
 		if (device_name.compare(midi->getPortName(i)) == 0) {
 			return i;
 		}
 	}
+
+	// If no device matches, return -1, as that is FOR SURE a wrong value
+	// and it should be checked for or at least throw an error when
+	// we try to open port -1
 	return -1;
 } //MidiHelper::getDeviceId(RtMidi *midi, std::string device_name)
 
-
-void MidiHelper::sendFeedback(const MidiEvent &event) {
+/* Send the feedback event for the given event **/
+void MidiHelper::sendFeedback(const MidiEvent &event) const {
 	std::vector<unsigned char> msg = event.getFeedback();
 	midiOut->sendMessage(&msg);
 }
-void MidiHelper::cancelFeedback(const MidiEvent &event) {
+
+/* Cancel the feedback event for the given event **/
+void MidiHelper::cancelFeedback(const MidiEvent &event) const {
 	std::vector<unsigned char> msg = event.getCancelFeedback();
 	midiOut->sendMessage(&msg);
-} //MidiHelper::cancelFeedback(const MidiEvent &event)
+}
 
 } //namespace midi
 } //namespace midicmd

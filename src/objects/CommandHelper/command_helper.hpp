@@ -8,23 +8,20 @@
 namespace midicmd {
 namespace command {
 
-using midicmd::midi::MidiHelper;
-using midicmd::config::ConfigHelper;
-
-
+/**
+ * Class that provides basic CRUD functionality for the list of commands.
+**/
 class CommandHelper {
 	public:
-		CommandHelper(MidiHelper*, ConfigHelper*);
-		~CommandHelper();
+		CommandHelper() {};
+		~CommandHelper() {};
 
-		void add();
-		void list();
-		void remove();
-		void help();
-	private:
-		MidiHelper *midiHelper;
-		ConfigHelper *configHelper;
+		void add() const;		// Add a new command to the config
+		void list() const;		// Print all configured commands
+		void remove() const;	// Remove a command from the config
+		void help() const;		// Shows instructions for this helper
 }; //CommandHelper
+
 } //namespace midicmd
 } //namespace command
 

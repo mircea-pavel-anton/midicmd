@@ -3,10 +3,16 @@
 namespace midicmd {
 namespace service {
 
+/** Gracefully end the loop created by `midicmd run` **/
 void ServiceHelper::finish(int) {
 	is_running = false;
-} //ServiceHelper::finish(int)
+}
 
+/** Checks whether or not the service is currently running.
+ * 
+ * This is a wrapper for systemctl status midicmd.service that greps for the service
+ * name and pipes it into wc. Then it simply checks for non zero value
+**/
 bool ServiceHelper::isRunning() const {
 	std::array<char, 128> buffer;
 	std::string result = "";
@@ -23,39 +29,60 @@ bool ServiceHelper::isRunning() const {
 	return (result.compare("1\n") == 0);
 } //ServiceHelper::isRunning()
 
-void ServiceHelper::sendAllFeedback(const std::map<int, const char*> &commands) const {
-	if (configHelper->getFeedback()) {
+/** 
+ * If midi feedback is enabled, loop through all configured macros and
+ * send the midi feedback message for all of them
+**/
+void ServiceHelper::sendAllFeedback(
+  const std::map<int, const char*> &commands,
+  const bool &feedback
+) const {
+	const auto midiHelper = midi::MidiHelper();
+	if (feedback) {
 		for (auto iter = commands.begin(); iter != commands.end(); iter++) {
-			midiHelper->sendFeedback(midi::MidiEvent(iter->first));
+			midiHelper.sendFeedback(midi::MidiEvent(iter->first));
 		}
 	}
-} //ServiceHelper::sendAllFeedback(const std::map<int, const char*> &commands)
+} //ServiceHelper::sendAllFeedback(...)
 
-void ServiceHelper::cancelAllFeedback(const std::map<int, const char*> &commands) const {
-	if (configHelper->getFeedback()) {
+/** 
+ * If midi feedback is enabled, loop through all configured macros and
+ * send the midi feedback-cancel message for all of them
+**/
+void ServiceHelper::cancelAllFeedback(
+  const std::map<int, const char*> &commands,
+  const bool &feedback
+) const {
+	const auto midiHelper = midi::MidiHelper();
+	if (feedback) {
 		for (auto iter = commands.begin(); iter != commands.end(); iter++) {
-			midiHelper->cancelFeedback(midi::MidiEvent(iter->first));
+			midiHelper.cancelFeedback(midi::MidiEvent(iter->first));
 		}
 	}
-} //ServiceHelper::cancelAllFeedback(const std::map<int, const char*> &commands)
+} //ServiceHelper::cancelAllFeedback(...)
 
+/**
+ * Continuously listen for midi messages from the selected devie and trigger
+ * the associated commands until the program is terminated.
+**/
 void ServiceHelper::listen(const std::map<int, const char*> &commands) const {
+	const auto midiHelper = midi::MidiHelper();
+
 	midi::MidiEvent event;
 	while (is_running) {
-		event = midiHelper->getMessage();
+		event = midiHelper.getMessage();
 
 		if (event.isOk()) {
 			auto iter = commands.find(event.getUID());
-
 			if (iter != commands.end()) {
 				system(iter->second);
 			}
 		}
-
 		usleep(10);
 	}
 } //ServiceHelper::listen(const std::map<int, const char*> &commands)
 
+/** Creates a systemd service file for this user only (under ~/.local...) **/
 void ServiceHelper::createServiceFile() const {
 	std::filesystem::create_directories(service_file_dir);
 	std::ofstream file(service_file_dir + service_file_name);
