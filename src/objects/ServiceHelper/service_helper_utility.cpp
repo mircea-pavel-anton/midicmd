@@ -56,10 +56,14 @@ void ServiceHelper::createServiceFile() const {
 	std::ofstream file(service_file_dir + service_file_name);
 	file << "[Unit]" << std::endl;
 	file << "Description=A translation layer that turns any midi device into a macro keyboard" << std::endl << std::endl;
+	file << "After=multi-user.target" << std::endl << std::endl;
+
 	file << "[Service]" << std::endl;
 	file << "Type=simple" << std::endl;
-	file << "TimeoutStartSec=0" << std::endl;
 	file << "ExecStart=/usr/local/bin/midicmd run" << std::endl;
+	file << "Restart=always" << std::endl;
+	file << "RestartSec=3" << std::endl << std::endl;
+
 	file << "[Install]" << std::endl;
 	file << "WantedBy=default.target" << std::endl;
 }
