@@ -19,12 +19,6 @@ void DeviceHelper::list() {
 }
 
 void DeviceHelper::set() {
-	if (!isRoot()) {
-		std::cout << toRed("Setting a device requires sudo privileges in order to edit the config file!");
-		std::cout << std::endl;
-		return;
-	}
-
 	list();
 
 	int device_count = midiHelper->getInputPortCount();
@@ -49,12 +43,6 @@ void DeviceHelper::set() {
 }
 
 void DeviceHelper::set(int port_id) {
-	if (!isRoot()) {
-		std::cout << toRed("Setting a device requires sudo privileges in order to edit the config file!");
-		std::cout << std::endl;
-		return;
-	}
-
 	try {
 		std::string device_name = midiHelper->setInputDevice(port_id);
 		configHelper->setDevice(device_name);

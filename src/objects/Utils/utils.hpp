@@ -71,7 +71,4 @@ inline bool getYesNo(std::string prompt) {
 
 	return status;
 }
-
-inline bool isRoot() { return geteuid() == 0; };
-
 #endif //UTILS_HEADER

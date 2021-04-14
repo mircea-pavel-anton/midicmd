@@ -7,12 +7,6 @@ CommandHelper::CommandHelper(MidiHelper *midi, ConfigHelper *config) {
 CommandHelper::~CommandHelper() { /* we don't delete here, but in ArgParser */ }
 
 void CommandHelper::add() {
-	if (!isRoot()) {
-		std::cout << toRed("Adding a command requires sudo privileges in order to edit the config file!");
-		std::cout << std::endl;
-		return;
-	}
-
 	int midi_port = midiHelper->getInputDeviceId( configHelper->getDevice() );
 	if (midi_port < 0) {
 		std::cout << toRed("Invalid device specified in the config file!") << std::endl;
@@ -78,12 +72,6 @@ void CommandHelper::list() {
 }
 
 void CommandHelper::remove() {
-	if (!isRoot()) {
-		std::cout << toRed("Removing a command requires sudo privileges in order to edit the config file!");
-		std::cout << std::endl;
-		return;
-	}
-
 	std::map<int, const char*> commands = configHelper->getCommands();
 	if (commands.size() == 0) {
 		std::cout << toRed("There are no commands configured.") << std::endl;

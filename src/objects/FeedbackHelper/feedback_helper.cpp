@@ -4,12 +4,6 @@ FeedbackHelper::FeedbackHelper(ConfigHelper *config) { configHelper = config; }
 FeedbackHelper::~FeedbackHelper() { /* we don't delete here, but in ArgParser */ }
 
 void FeedbackHelper::enable() {
-	if (!isRoot()) {
-		std::cout << toRed("Setting the feedback requires sudo privileges in order to edit the config file!");
-		std::cout << std::endl;
-		return;
-	}
-
 	if (configHelper->getFeedback()) {
 		std::cout << toYellow("MiDi feedback is already enabled!") << std::endl;
 	} else {
@@ -19,12 +13,6 @@ void FeedbackHelper::enable() {
 }
 
 void FeedbackHelper::disable() {
-	if (!isRoot()) {
-		std::cout << toRed("Setting the feedback requires sudo privileges in order to edit the config file!");
-		std::cout << std::endl;
-		return;
-	}
-
 	if (configHelper->getFeedback()) {
 		configHelper->setFeedback(false);
 		std::cout << toGreen("MiDi feedback disabled!") << std::endl;
