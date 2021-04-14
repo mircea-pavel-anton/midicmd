@@ -22,10 +22,10 @@ link:
 
 clean:
 	@ printf "Removing build dir..."
-	@ rm -rf build >> /dev/null 2> /dev/null
+	@ rm -rf build >> /dev/null 2> /dev/null || true
 	@ echo "\033[1;32mDone\033[1;0m"
 	@ printf "Removing binary..."
-	@ rm $(BINARY) >> /dev/null 2> /dev/null
+	@ rm $(BINARY) >> /dev/null 2> /dev/null || true
 	@ echo "\033[1;32mDone\033[1;0m"
 
 dependencies:
@@ -37,6 +37,23 @@ copy-bin:
 	@ printf "Copying compiled binary to /usr/local/bin... "
 	@ sudo cp ${BINARY} /usr/local/bin/$(BINARY)
 	@ echo "\033[1;32mDone\033[1;0m"
-	@ echo "\033[1;32m\033[1;1mInstallation complete!\033[1;0m"
 
 install: dependencies build copy-bin clean
+	@ echo "\033[1;32m\033[1;1mInstallation complete!\033[1;0m"
+
+uninstall:
+	@ printf "Removing binary... "
+	@ sudo rm /usr/local/bin/$(BINARY) >> /dev/null 2>/dev/null || true 
+	@ echo "\033[1;32mDone\033[1;0m"
+
+	@ printf "Disabling service..."
+	@ systemctl --user disable midicmd.service >> /dev/null 2>/dev/null || true 
+	@ echo "\033[1;32mDone\033[1;0m"
+
+	@ printf "Removing local service file, if any... "
+	@ rm ~/.local/share/systemd/user/midicmd.service >> /dev/null 2>/dev/null || true 
+	@ echo "\033[1;32mDone\033[1;0m"
+
+	@ printf "Removing config file, if any... "
+	@ rm ~/.config/midicmd/midicmd.conf >> /dev/null 2>/dev/null || true 
+	@ echo "\033[1;32mDone\033[1;0m"
