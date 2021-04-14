@@ -25,7 +25,7 @@ class ConfigHelper {
 		void setCommands(std::map<int, const char*>);
 	private:
 		Config cache;
-		std::string filePath = "/etc/midicmd.conf";
+		std::string filePath = "~/.config/midicmd/midicmd.conf";
 
 		void cacheFileContents();
 };

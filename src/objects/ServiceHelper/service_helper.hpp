@@ -17,26 +17,40 @@ extern bool is_running;
 class ServiceHelper {
 	public:
 		ServiceHelper(MidiHelper*, ConfigHelper*, DeviceHelper*, FeedbackHelper*, CommandHelper*);
-		~ServiceHelper();
+		~ServiceHelper() {};
 
-		void start();
-		void stop();
-		void status();
+		void start() const;
+		void stop() const;
+		void status() const;
 
-		void enable();
-		void disable();
+		void enable() const;
+		void disable() const;
 
-		void init();
-		void run();
-		void help();
+		void init() const;
+		void run() const;
+		void help() const;
 	private:
-		std::string service_file_path = "/etc/systemd/system/midicmd.service";
+		const char *service_file_path = "~/.local/share/systemd/user/midicmd.service";
+		const char *command_start = "systemctl --user start midicmd.service";
+		const char *command_stop = "systemctl --user stop midicmd.service";
+		const char *command_enable = "systemctl --user enable midicmd.service";
+		const char *command_disable = "systemctl --user disable midicmd.service";
+		const char *command_status = "systemctl status midicmd | grep running | wc -l";
+
 		MidiHelper *midiHelper;
 		ConfigHelper *configHelper;
 		DeviceHelper *deviceHelper;
 		FeedbackHelper *feedbackHelper;
 		CommandHelper *commandHelper;
-		bool isRunning();
+
+		bool isRunning() const;
+
+		void createServiceFile() const;
+
+		static void finish(int);
+		void sendAllFeedback(const std::map<int, const char*>&) const;
+		void cancelAllFeedback(const std::map<int, const char*>&) const;
+		void listen(const std::map<int, const char*>&) const;
 };
 
 #endif //SERVICE_HELPER_CLASS
