@@ -10,7 +10,7 @@
 
 class ConfigHelper {
 	public:
-		ConfigHelper() { cache = Config(); };
+		ConfigHelper();
 		~ConfigHelper() {};
 
 		void write(Config&);
@@ -24,8 +24,10 @@ class ConfigHelper {
 		void setFeedback(bool);
 		void setCommands(std::map<int, const char*>);
 	private:
+		std::string conf_file_dir;
+		const std::string conf_file_name = "midicmd.conf";
+
 		Config cache;
-		std::string filePath = "~/.config/midicmd/midicmd.conf";
 
 		void cacheFileContents();
 };

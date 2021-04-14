@@ -6,6 +6,9 @@ ServiceHelper::ServiceHelper(MidiHelper *midi, ConfigHelper *config, DeviceHelpe
 	deviceHelper = device;
 	commandHelper = command;
 	feedbackHelper = feedback;
+
+	service_file_dir = getenv("HOME");
+	service_file_dir += "/.local/share/systemd/user/";
 }
 
 void ServiceHelper::start() const {

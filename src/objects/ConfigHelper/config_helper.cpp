@@ -1,5 +1,11 @@
 #include "config_helper.hpp"
 
+ConfigHelper::ConfigHelper() {
+	cache = Config();
+	conf_file_dir = getenv("HOME");
+	conf_file_dir += "/.config/midicmd/";
+}
+
 //* Config File I/O *//
 void ConfigHelper::cacheFileContents() {
 	std::ifstream file(conf_file_dir + conf_file_name);

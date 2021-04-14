@@ -3,6 +3,7 @@
 
 #include <unistd.h>
 #include <memory>
+#include <filesystem>
 
 #include "../MidiEvent/midi_event.hpp"
 #include "../MidiHelper/midi_helper.hpp"
@@ -30,7 +31,8 @@ class ServiceHelper {
 		void run() const;
 		void help() const;
 	private:
-		const char *service_file_path = "~/.local/share/systemd/user/midicmd.service";
+		std::string service_file_dir;
+		const std::string service_file_name = "midicmd.service";
 		const char *command_start = "systemctl --user start midicmd.service";
 		const char *command_stop = "systemctl --user stop midicmd.service";
 		const char *command_enable = "systemctl --user enable midicmd.service";
