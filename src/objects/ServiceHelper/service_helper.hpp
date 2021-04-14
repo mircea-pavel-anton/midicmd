@@ -37,7 +37,7 @@ class ServiceHelper {
 		const char *command_stop = "systemctl --user stop midicmd.service";
 		const char *command_enable = "systemctl --user enable midicmd.service";
 		const char *command_disable = "systemctl --user disable midicmd.service";
-		const char *command_status = "systemctl status midicmd | grep running | wc -l";
+		const char *command_status = "systemctl --user status midicmd | grep running | wc -l";
 
 		MidiHelper *midiHelper;
 		ConfigHelper *configHelper;
