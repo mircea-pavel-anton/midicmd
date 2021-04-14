@@ -104,6 +104,8 @@ void ServiceHelper::run() const {
 
 	is_running = true;
 	(void) signal(SIGINT, finish);
+	(void) signal(SIGTERM, finish);
+	(void) signal(SIGKILL, finish);
 
 	sendAllFeedback(commands);
 	listen(commands);
