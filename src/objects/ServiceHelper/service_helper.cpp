@@ -43,7 +43,7 @@ void ServiceHelper::enable() const {
 		std::cout << "Next time you login, midicmd will already be running!" << std::endl;
 
 		if (!isRunning()) {
-			std::cout << "To start the daemon now, run: " << toYellow("sudo midicmd start") << std::endl;
+			std::cout << "To start the daemon now, run: " << toYellow("midicmd start") << std::endl;
 		}
 	} else {
 		std::cout << toRed("Failed to enable the service!") << std::endl;
@@ -59,7 +59,7 @@ void ServiceHelper::disable() const {
 		std::cout << "Next time you login, midicmd will not be running!" << std::endl;
 		
 		if (isRunning()) { 
-			std::cout << "To stop the daemon now, run: " << toYellow("sudo midicmd stop") << std::endl;
+			std::cout << "To stop the daemon now, run: " << toYellow("midicmd stop") << std::endl;
 		}
 	} else {
 		std::cout << toRed("Failed to disable the service!") << std::endl;
@@ -100,7 +100,7 @@ void ServiceHelper::init() const {
 
 	std::cout << "Now it's time to add your first command!" << std::endl;
 	command::CommandHelper().add();
-	std::cout << "To add more commands, use " << toYellow("sudo midicmd commands add") << std::endl;
+	std::cout << "To add more commands, use " << toYellow("midicmd commands add") << std::endl;
 } //ServiceHelper::init()
 
 /** Starts the midicmd service in the foreground **/

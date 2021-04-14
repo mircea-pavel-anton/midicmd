@@ -21,7 +21,7 @@ void CommandHelper::add() const {
 		int midi_port = midiHelper.getInputDeviceId( configHelper.getDevice() );
 		if (midi_port < 0) {
 			std::cout << toRed("Invalid device specified in the config file!") << std::endl;
-			std::cout << "You can set a new device using " << toYellow("sudo midicmd device set") << std::endl;
+			std::cout << "You can set a new device using " << toYellow("midicmd device set") << std::endl;
 			return;
 		}
 		midiHelper.setInputDevice(midi_port);
@@ -78,7 +78,7 @@ void CommandHelper::list() const {
 
 	if (commands.size() == 0) {
 		std::cout << toRed("There are no commands in the config file!") << std::endl;
-		std::cout << "You can add some with: " << toYellow("sudo midicmd command add") << std::endl;
+		std::cout << "You can add some with: " << toYellow("midicmd command add") << std::endl;
 		return;
 	}
 
