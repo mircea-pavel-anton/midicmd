@@ -20,6 +20,7 @@ MidiHelper::~MidiHelper() {
 	}
 }
 
+bool MidiHelper::hasPortOpen() { return midiIn->isPortOpen(); }
 
 MidiEvent MidiHelper::getMessage() {
 	std::vector<unsigned char> data;

@@ -7,14 +7,15 @@ CommandHelper::CommandHelper(MidiHelper *midi, ConfigHelper *config) {
 CommandHelper::~CommandHelper() { /* we don't delete here, but in ArgParser */ }
 
 void CommandHelper::add() {
-	int midi_port = midiHelper->getInputDeviceId( configHelper->getDevice() );
-	if (midi_port < 0) {
-		std::cout << toRed("Invalid device specified in the config file!") << std::endl;
-		std::cout << "You can set a new device using " << toYellow("sudo midicmd device set") << std::endl;
-		return;
-	}
-
-	midiHelper->setInputDevice(midi_port);
+	if (midiHelper->hasPortOpen() == false) {
+		int midi_port = midiHelper->getInputDeviceId( configHelper->getDevice() );
+		if (midi_port < 0) {
+			std::cout << toRed("Invalid device specified in the config file!") << std::endl;
+			std::cout << "You can set a new device using " << toYellow("sudo midicmd device set") << std::endl;
+			return;
+		}
+		midiHelper->setInputDevice(midi_port);
+	} 
 	std::string command = "";
 	bool status = false;
 	MidiEvent event;

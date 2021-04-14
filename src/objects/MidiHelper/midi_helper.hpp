@@ -25,6 +25,8 @@ class MidiHelper {
 
 		int getInputDeviceId(std::string);
 		int getOutputDeviceId(std::string);
+
+		bool hasPortOpen();
 	private:
 		RtMidiIn *midiIn;
 		RtMidiOut *midiOut;
