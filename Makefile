@@ -22,14 +22,21 @@ link:
 
 clean:
 	@ printf "Removing build dir..."
-	@ rm -rf build
+	@ rm -rf build >> /dev/null 2> /dev/null
 	@ echo "\033[1;32mDone\033[1;0m"
 	@ printf "Removing binary..."
-	@ rm $(BINARY)
+	@ rm $(BINARY) >> /dev/null 2> /dev/null
 	@ echo "\033[1;32mDone\033[1;0m"
 
-install: build
+dependencies:
+	@ printf "Installing dependencies..."
+	@ sudo apt install libasound2-dev -y >> /dev/null 2> /dev/null
+	@ echo "\033[1;32mDone\033[1;0m"
+
+copy-bin:
 	@ printf "Copying compiled binary to /usr/local/bin... "
 	@ sudo cp ${BINARY} /usr/local/bin/$(BINARY)
 	@ echo "\033[1;32mDone\033[1;0m"
 	@ echo "\033[1;32m\033[1;1mInstallation complete!\033[1;0m"
+
+install: dependencies build copy-bin clean
