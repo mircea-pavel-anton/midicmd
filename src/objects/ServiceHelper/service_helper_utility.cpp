@@ -52,7 +52,8 @@ void ServiceHelper::listen(const std::map<int, const char*> &commands) const {
 }
 
 void ServiceHelper::createServiceFile() const {
-	std::ofstream file(service_file_path);
+	std::filesystem::create_directories(service_file_dir);
+	std::ofstream file(service_file_dir + service_file_name);
 	file << "[Unit]" << std::endl;
 	file << "Description=A translation layer that turns any midi device into a macro keyboard" << std::endl << std::endl;
 	file << "[Service]" << std::endl;

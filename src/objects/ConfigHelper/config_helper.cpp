@@ -2,7 +2,7 @@
 
 //* Config File I/O *//
 void ConfigHelper::cacheFileContents() {
-	std::ifstream file(filePath);
+	std::ifstream file(conf_file_dir + conf_file_name);
 	std::string line = "";
 
 	while (std::getline(file, line)) {
@@ -47,7 +47,8 @@ void ConfigHelper::cacheFileContents() {
 }
 
 void ConfigHelper::write(Config &config) {
-	std::ofstream file(filePath);
+	std::filesystem::create_directories(conf_file_dir);
+	std::ofstream file(conf_file_dir + conf_file_name);
 	file << "device: "   << config.device << std::endl;
 	
 	file << "feedback: ";
@@ -86,7 +87,6 @@ bool ConfigHelper::getFeedback() {
 	if (cache.isSet == false) cacheFileContents();
 	return cache.feedback;
 }
-
 
 //* SETTERS *//
 void ConfigHelper::setDevice(std::string device) {
