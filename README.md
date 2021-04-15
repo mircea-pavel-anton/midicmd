@@ -5,7 +5,7 @@
 
 # MidiCMD
 
-A translation layer that turns your MiDi device into a macro keyboard.
+A linux command-line application that turns any MiDi device into a macro keyboard.
 
 ---
 
