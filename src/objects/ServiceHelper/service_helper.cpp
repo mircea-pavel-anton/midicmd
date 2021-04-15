@@ -145,6 +145,8 @@ void ServiceHelper::help() const {
 	cout << toBold("    feedback [OPTION] \t\t") << "Enable/Disable MiDi feedback" << endl;
 	cout << endl;
 	
+	cout << toBold("    init\t\t") << "Run through the configuration wizard." << endl;
+	
 	cout << toBold("    start\t\t") << "Start the midicmd daemon" << endl;
 	cout << toBold("    stop\t\t") << "Stop the midicmd daemon" << endl;
 	cout << toBold("    run\t\t") << "Starts the actual midi driver in the foreground. Mostly used for testing purposes." << endl;
