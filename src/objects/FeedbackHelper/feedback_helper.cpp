@@ -5,22 +5,18 @@ namespace feedback {
 
 /* Set feedback to True in the config file */
 void FeedbackHelper::enable() const {
-	auto configHelper = config::ConfigHelper();
-
-	if (configHelper.getFeedback()) {
+	if (configHelper->getFeedback()) {
 		std::cout << toYellow("MiDi feedback is already enabled!") << std::endl;
 	} else {
-		configHelper.setFeedback(true);
+		configHelper->setFeedback(true);
 		std::cout << toGreen("MiDi feedback enabled!") << std::endl;
 	}
 } //FeedbackHelper::enable()
 
 /* Set feedback to False in the config file */
 void FeedbackHelper::disable() const {
-	auto configHelper = config::ConfigHelper();
-
-	if (configHelper.getFeedback()) {
-		configHelper.setFeedback(false);
+	if (configHelper->getFeedback()) {
+		configHelper->setFeedback(false);
 		std::cout << toGreen("MiDi feedback disabled!") << std::endl;
 	} else {
 		std::cout << toYellow("MiDi feedback is already disabled!") << std::endl;
@@ -29,10 +25,8 @@ void FeedbackHelper::disable() const {
 
 /* Print the status of feedback from the config file to stdout */
 void FeedbackHelper::status() const {
-	auto configHelper = config::ConfigHelper();
-
 	std::cout << "MiDi feedback is currently ";
-	if (configHelper.getFeedback()) {
+	if (configHelper->getFeedback()) {
 		std::cout << toGreen("enabled") << std::endl;
 	} else {
 		std::cout << toRed("disabled") << std::endl;

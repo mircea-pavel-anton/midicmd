@@ -91,33 +91,30 @@ void ServiceHelper::init() const {
 	createServiceFile();
 
 
-	device::DeviceHelper().set();
+	deviceHelper->set();
 
 	bool feedback = getYesNo("Do you want to enable midi feedback for your device?");
 	if (feedback) {
-		feedback::FeedbackHelper().enable();
+		feedbackHelper->enable();
 	}
 
 	std::cout << "Now it's time to add your first command!" << std::endl;
-	command::CommandHelper().add();
+	commandHelper->add();
 	std::cout << "To add more commands, use " << toYellow("midicmd commands add") << std::endl;
 } //ServiceHelper::init()
 
 /** Starts the midicmd service in the foreground **/
 void ServiceHelper::run() const {
-	const auto midiHelper = midi::MidiHelper();
-	const auto configHelper = config::ConfigHelper();
-
 	// Try opening the port specified in the config file, and exit if it doesn't exist
-	int device_port = midiHelper.getInputDeviceId( configHelper.getDevice() );
+	int device_port = midiHelper->getInputDeviceId( configHelper->getDevice() );
 	if (device_port == -1) {
 		std::cout << toRed("No input device set!");
 		return;
 	}
 
-	midiHelper.setInputDevice(device_port);
-	bool feedback = configHelper.getFeedback();
-	auto commands = configHelper.getCommands();
+	midiHelper->setInputDevice(device_port);
+	bool feedback = configHelper->getFeedback();
+	auto commands = configHelper->getCommands();
 
 	is_running = true; // the "endless" loop condition
 	// Add signal handlers

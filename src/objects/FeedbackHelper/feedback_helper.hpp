@@ -13,13 +13,16 @@ namespace feedback {
 **/
 class FeedbackHelper{
 	public:
-		FeedbackHelper() {};
+		FeedbackHelper(config::ConfigHelper *helper) : configHelper(helper){};
 		~FeedbackHelper() {};
 
 		void enable() const;
 		void disable() const;
 		void status() const;
 		void help() const;
+
+	private:
+		config::ConfigHelper *configHelper;
 }; //FeedbackHelper
 
 } //namespace midicmd

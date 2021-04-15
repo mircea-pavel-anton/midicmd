@@ -19,7 +19,8 @@ namespace device {
 **/
 class DeviceHelper {
 	public:
-		DeviceHelper() {};
+		DeviceHelper(midi::MidiHelper *midi, config::ConfigHelper *config)
+			: midiHelper(midi), configHelper(config) {};
 		~DeviceHelper() {};
 
 		void list() const;
@@ -27,6 +28,10 @@ class DeviceHelper {
 		void set(int) const;
 		void status() const;
 		void help() const;
+
+	private:
+		midi::MidiHelper *midiHelper;
+		config::ConfigHelper *configHelper;
 }; //DeviceHelper
 
 } //namespace midicmd

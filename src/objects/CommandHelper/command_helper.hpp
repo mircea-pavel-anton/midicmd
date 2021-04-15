@@ -13,13 +13,18 @@ namespace command {
 **/
 class CommandHelper {
 	public:
-		CommandHelper() {};
+		CommandHelper(midi::MidiHelper *midi, config::ConfigHelper *config)
+			: midiHelper(midi), configHelper(config){};
 		~CommandHelper() {};
 
-		void add() const;		// Add a new command to the config
-		void list() const;		// Print all configured commands
-		void remove() const;	// Remove a command from the config
-		void help() const;		// Shows instructions for this helper
+		void add() const;
+		void list() const;
+		void remove() const;
+		void help() const;
+
+	private:
+		midi::MidiHelper *midiHelper;
+		config::ConfigHelper *configHelper;
 }; //CommandHelper
 
 } //namespace midicmd

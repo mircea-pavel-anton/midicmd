@@ -37,10 +37,9 @@ void ServiceHelper::sendAllFeedback(
   const std::map<int, const char*> &commands,
   const bool &feedback
 ) const {
-	const auto midiHelper = midi::MidiHelper();
 	if (feedback) {
 		for (auto iter = commands.begin(); iter != commands.end(); iter++) {
-			midiHelper.sendFeedback(midi::MidiEvent(iter->first));
+			midiHelper->sendFeedback(midi::MidiEvent(iter->first));
 		}
 	}
 } //ServiceHelper::sendAllFeedback(...)
@@ -53,10 +52,9 @@ void ServiceHelper::cancelAllFeedback(
   const std::map<int, const char*> &commands,
   const bool &feedback
 ) const {
-	const auto midiHelper = midi::MidiHelper();
 	if (feedback) {
 		for (auto iter = commands.begin(); iter != commands.end(); iter++) {
-			midiHelper.cancelFeedback(midi::MidiEvent(iter->first));
+			midiHelper->cancelFeedback(midi::MidiEvent(iter->first));
 		}
 	}
 } //ServiceHelper::cancelAllFeedback(...)
@@ -66,11 +64,9 @@ void ServiceHelper::cancelAllFeedback(
  * the associated commands until the program is terminated.
 **/
 void ServiceHelper::listen(const std::map<int, const char*> &commands) const {
-	const auto midiHelper = midi::MidiHelper();
-
 	midi::MidiEvent event;
 	while (is_running) {
-		event = midiHelper.getMessage();
+		event = midiHelper->getMessage();
 
 		if (event.isOk()) {
 			auto iter = commands.find(event.getUID());

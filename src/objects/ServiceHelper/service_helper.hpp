@@ -21,7 +21,14 @@ namespace service {
 
 class ServiceHelper {
 	public:
-		ServiceHelper() {};
+		ServiceHelper(
+			midi::MidiHelper *midi,
+			config::ConfigHelper *config,
+			device::DeviceHelper *device,
+			feedback::FeedbackHelper *feedback,
+			command::CommandHelper *command
+		) : midiHelper(midi), configHelper(config), deviceHelper(device),
+			feedbackHelper(feedback), commandHelper(command) {};
 		~ServiceHelper() {};
 
 		void start() const;
@@ -42,6 +49,12 @@ class ServiceHelper {
 		const char *command_enable = "systemctl --user enable midicmd.service";
 		const char *command_disable = "systemctl --user disable midicmd.service";
 		const char *command_status = "systemctl --user status midicmd | grep running | wc -l";
+
+		midi::MidiHelper *midiHelper;
+		config::ConfigHelper *configHelper;
+		device::DeviceHelper *deviceHelper;
+		feedback::FeedbackHelper *feedbackHelper;
+		command::CommandHelper *commandHelper;
 
 		bool isRunning() const;
 

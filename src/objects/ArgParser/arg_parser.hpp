@@ -17,12 +17,19 @@ namespace midicmd {
 class ArgParser {
 	public:
 		// Empty constructor & destructor
-		ArgParser() {};
-		~ArgParser() {};
+		ArgParser();
+		~ArgParser();
 
 		// Main parser method, calls the specialised private parsers
 		void parse(int, char**) const;
 	private:
+		command::CommandHelper *commandHelper;
+		config::ConfigHelper *configHelper;
+		device::DeviceHelper *deviceHelper;
+		feedback::FeedbackHelper *feedbackHelper;
+		midi::MidiHelper *midiHelper;
+		service::ServiceHelper *serviceHelper;
+
 		// Parser method for service-related commands
 		void parse_service(int, char**) const;
 

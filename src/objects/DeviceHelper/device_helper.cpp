@@ -5,9 +5,7 @@ namespace device {
 
 /* Prints an indexed list of all the available devices connected to the computer */
 void DeviceHelper::list() const {
-	auto midiHelper = midi::MidiHelper();
-
-	std::vector<std::string> devices = midiHelper.getInputDevices();
+	std::vector<std::string> devices = midiHelper->getInputDevices();
 	const int device_count = devices.size();
 
 	std::cout << toGreen("There are " + std::to_string(device_count) + " devices available:");
@@ -25,8 +23,7 @@ void DeviceHelper::list() const {
 void DeviceHelper::set() const {
 	list(); // print a list of all the devices
 
-	const auto midiHelper = midi::MidiHelper();
-	const int device_count = midiHelper.getInputPortCount();
+	const int device_count = midiHelper->getInputPortCount();
 	std::string user_input = "";
 	int value = 0; // the integer value extracted from @user_input
 	bool is_value_ok = false;
@@ -55,12 +52,9 @@ void DeviceHelper::set() const {
 
 /* Sets the given port_id as the active midi device this program will listen to */
 void DeviceHelper::set(int port_id) const {
-	const auto midiHelper = midi::MidiHelper();
-	auto configHelper = config::ConfigHelper();
-
 	try {
-		std::string device_name = midiHelper.setInputDevice(port_id);
-		configHelper.setDevice(device_name);
+		std::string device_name = midiHelper->setInputDevice(port_id);
+		configHelper->setDevice(device_name);
 		std::cout << toGreen("Device changed!") << std::endl;
 	} catch(std::range_error &err) {
 		std::cout << toRed("Failed to set device. Index out of range!");
@@ -70,11 +64,9 @@ void DeviceHelper::set(int port_id) const {
 
 /* Prints the currently active input (and output if applicable) device(s) */
 void DeviceHelper::status() const {
-	const auto configHelper = config::ConfigHelper();
-	const auto midiHelper = midi::MidiHelper();
-	const std::string device_name = configHelper.getDevice();
+	const std::string device_name = configHelper->getDevice();
 
-	if (midiHelper.getInputDeviceId(device_name) != -1) {
+	if (midiHelper->getInputDeviceId(device_name) != -1) {
 		std::cout << "Currently listenting to: ";
 		std::cout << toYellow(device_name);
 		std::cout << std::endl;
@@ -83,8 +75,8 @@ void DeviceHelper::status() const {
 		return;
 	}
 
-	if (configHelper.getFeedback()) {
-		if (midiHelper.getOutputDeviceId(device_name) != -1) {
+	if (configHelper->getFeedback()) {
+		if (midiHelper->getOutputDeviceId(device_name) != -1) {
 			std::cout << "Currently talking to: ";
 			std::cout << toYellow(device_name);
 			std::cout << std::endl;

@@ -8,28 +8,24 @@ namespace command {
  * to the config.
 **/
 void CommandHelper::add() const {
-	// Get an instance of each of the required helpers
-	auto configHelper = config::ConfigHelper();
-	auto midiHelper = midi::MidiHelper();
-
 	// Check if a midi port has already been opened before calling this method.
 	// If it has been opened, carry on. Otherwise, try opening one with the device
 	// specified in the config file.
 	// If no device is mentioned there, or an invalid one is, then @midi_port will be -1
 	// so we show an error message and exit
-	if (midiHelper.hasPortOpen() == false) {
-		int midi_port = midiHelper.getInputDeviceId( configHelper.getDevice() );
+	if (midiHelper->hasPortOpen() == false) {
+		int midi_port = midiHelper->getInputDeviceId( configHelper->getDevice() );
 		if (midi_port < 0) {
 			std::cout << toRed("Invalid device specified in the config file!") << std::endl;
 			std::cout << "You can set a new device using " << toYellow("midicmd device set") << std::endl;
 			return;
 		}
-		midiHelper.setInputDevice(midi_port);
+		midiHelper->setInputDevice(midi_port);
 	} 
 	
 	// Get a map of all the commands from the config file
 	// We need it to add a new command or to check if the user tries to overwrite one
-	auto commands = configHelper.getCommands();
+	auto commands = configHelper->getCommands();
 
 	// The ok-status of each section of adding a command
 	bool status = false;
@@ -37,7 +33,7 @@ void CommandHelper::add() const {
 
 	std::cout << "Press the key on your midi device you want to bind a macro to:" << std::endl;
 	do {
-		event = midiHelper.getMessage();
+		event = midiHelper->getMessage();
 
 		if (event.isOk()) {
 			std::cout << "Event: " << event.getEventName() << std::endl;
@@ -68,13 +64,12 @@ void CommandHelper::add() const {
 
 	std::pair<int, const char*> entry = { event.getUID(), user_input.c_str() };
 	commands.emplace(entry);
-	configHelper.setCommands(commands);
+	configHelper->setCommands(commands);
 } //CommandHelper::add()
 
 /* Prints a list of all of the commands currently configured */
 void CommandHelper::list() const {
-	const auto configHelper = config::ConfigHelper();
-	std::map<int, const char*> commands = configHelper.getCommands();
+	std::map<int, const char*> commands = configHelper->getCommands();
 
 	if (commands.size() == 0) {
 		std::cout << toRed("There are no commands in the config file!") << std::endl;
@@ -94,8 +89,7 @@ void CommandHelper::list() const {
  * delete one.
 **/
 void CommandHelper::remove() const {
-	auto configHelper = config::ConfigHelper();
-	std::map<int, const char*> commands = configHelper.getCommands();
+	std::map<int, const char*> commands = configHelper->getCommands();
 	if (commands.empty()) {
 		std::cout << toRed("There are no commands configured.") << std::endl;
 		std::cout << toYellow("There is nothing to delete.") << std::endl;
@@ -129,7 +123,7 @@ void CommandHelper::remove() const {
 	} while (!is_value_ok);
 
 	if (commands.erase(value) == 1) {
-		configHelper.setCommands(commands);
+		configHelper->setCommands(commands);
 		std::cout << toGreen("Command removed!") << std::endl;
 	} else {
 		std::cout << toRed("Failed to remove command!") << std::endl;
