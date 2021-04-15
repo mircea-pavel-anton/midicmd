@@ -2,13 +2,27 @@
 
 A translation layer that turns your MiDi device into a macro keyboard.
 
-<br>
+---
 
-## Setup, usage and install instructions
+## Getting Started
 
-All the instructions you require are in the [repo wiki](https://github.com/mikeanth-dev/midicmd/wiki).
+### The easy solution: Getting the precompiled binaries
 
-<br>
+The recommended way to install is to download one of the precompiled binaries available in the releases page.  
+
+### The hack3rman solution: Building from source
+
+If, however, you're feeling adventurous or I don't provide the right arch for your system, building from source is a BREEZE.  
+All you have to do is to ensure you have `make` installed on your system, then clone this repo and run `make install`.
+
+### The first run
+
+The first time you'll run this program, you should run `midicmd init` to finish setting up your instance and then feel free to check the `help` options or the wiki for more details.
+
+### Enabling the service
+
+Say you want this code to run every time you log in, but typing `midicmd start` manually is such a chore. What can you do?  
+Fear not, you can simply enable `midicmd` as a service for the current user by running `midicmd enable` (assuming you ran `midicmd init` before, in order to finish the setup).
 
 ## Feedback, suggestions and help
 
