@@ -1,3 +1,8 @@
+![GitHub](https://img.shields.io/github/license/mikeanth-dev/midicmd?style=for-the-badge)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/mikeanth-dev/midicmd?style=for-the-badge)
+![GitHub top language](https://img.shields.io/github/languages/top/mikeanth-dev/midicmd?style=for-the-badge)
+![Supported platforms](https://img.shields.io/badge/Platform-Linux-red?style=for-the-badge)
+
 # MidiCMD
 
 A translation layer that turns your MiDi device into a macro keyboard.
