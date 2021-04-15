@@ -100,7 +100,7 @@ void ServiceHelper::init() const {
 
 	std::cout << "Now it's time to add your first command!" << std::endl;
 	commandHelper->add();
-	std::cout << "To add more commands, use " << toYellow("midicmd commands add") << std::endl;
+	std::cout << "To add more commands, use " << toYellow("midicmd command add") << std::endl;
 } //ServiceHelper::init()
 
 /** Starts the midicmd service in the foreground **/
